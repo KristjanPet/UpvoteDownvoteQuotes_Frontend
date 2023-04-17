@@ -3,6 +3,7 @@ import { Route, RouteProps, Routes as Switch } from 'react-router-dom'
 
 import PrivateRoute from './PrivateRoute'
 import RestrictedRoute from './RestrictedRoute'
+import DashboardProfile from 'pages/Dashboard/Profile'
 
 export enum RouteType {
   PUBLIC,
@@ -18,15 +19,41 @@ type AppRoute = RouteProps & {
 const Home = lazy(() => import('pages/Home'))
 
 /* Private routes */
+const Dashboard = lazy(() => import('pages/Dashboard'))
+const Profile = lazy(() => import('pages/Dashboard/Profile'))
 
 /* Restricted routes */
+const Login = lazy(() => import('pages/Login'))
+const Register = lazy(() => import('pages/Register'))
 
 /* Error routes */
 const Page404 = lazy(() => import('pages/Page404'))
 
 export const AppRoutes: AppRoute[] = [
   // Restricted Routes
+  {
+    type: RouteType.RESTRICTED,
+    path: '/login',
+    children: <Login />,
+  },
+  {
+    type: RouteType.RESTRICTED,
+    path: '/signup',
+    children: <Register />,
+  },
+
   // Private Routes
+  {
+    type: RouteType.PRIVATE,
+    path: '/dashboard',
+    children: <Dashboard />,
+  },
+  {
+    type: RouteType.PRIVATE,
+    path: '/dashboard/profile',
+    children: <DashboardProfile />,
+  },
+
   // Public Routes
   {
     type: RouteType.PUBLIC,
