@@ -1,10 +1,11 @@
 @import '../fonts/fonts.css';
+@import '@fontsource/raleway';
 // Override Bootstrap Variables.
 // For example: $grid-gutter-width-base:  20px;
 // For example: $grid-gutter-width: 20px;
 
 /* make the customizations */
-$font-family-base: 'Montserrat';
+$font-family-base: 'Raleway';
 
 //Bootstrap
 @import '~bootstrap/scss/bootstrap';

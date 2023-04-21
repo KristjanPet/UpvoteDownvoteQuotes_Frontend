@@ -1,3 +1,7 @@
+body {
+  font-family: 'Raleway';
+}
+
 .layout-container {
   height: calc(100vh - 200px);
 }
@@ -7,7 +11,13 @@
   display: none !important;
 }
 
-.login-form,
+.login-form {
+  width: 100%;
+  width: min(100%, 420px);
+  margin: 0 auto;
+  padding-top: 120px;
+}
+
 .register-form {
   width: 100%;
   width: min(100%, 420px);
@@ -30,6 +40,28 @@
   height: 40px !important;
 }
 
+.signup-avatar {
+  width: 64px !important;
+  height: 64px !important;
+}
+
+.signup-avatar img {
+  width: 64px !important;
+  height: 64px !important;
+}
+
+#avatarParent:hover #avatar {
+  display: none;
+}
+
+#avatarParent:hover #upload {
+  display: block;
+}
+
+#upload {
+  display: none;
+}
+
 .signup-button-litlle {
   display: flex;
   flex-direction: row;
@@ -37,6 +69,7 @@
   align-items: center;
   padding: 8px 16px;
   gap: 10px;
+  text-decoration: none;
 
   width: 137px;
   height: 40px;
@@ -64,6 +97,7 @@
   align-items: center;
   padding: 8px 16px;
   gap: 10px;
+  text-decoration: none;
 
   width: 137px;
   height: 40px;
@@ -82,12 +116,80 @@
   color: #de8667;
 }
 
-.navbar-text {
-  color: #de8667;
-  text-decoration: none;
+.orange-border {
+  border: 2px solid #de8667;
 }
 
-.navbar-text:hover {
+// .navbar-text {
+//   color: #de8667;
+//   text-decoration: none;
+// }
+
+.logout-button {
+  border: none;
+  background-color: transparent;
+}
+
+// .navbar-text:hover {
+//   color: #de8667;
+//   text-decoration: none;
+// }
+
+.signup-text-black {
+  font-size: 35px;
+}
+
+.text-orange {
   color: #de8667;
-  text-decoration: none;
+}
+
+.text-white {
+  color: white;
+}
+
+.signup-text-small {
+  font-size: 16px;
+  text-align: center;
+}
+
+.signup-text-xsmall {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.form-section-orange {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 30px 8px 24px;
+  gap: 8px;
+
+  width: 420px;
+  height: 40px;
+
+  background: #ffffff;
+  /* Orange */
+
+  border: 2px solid #de8667;
+  border-radius: 32px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.rectangle {
+  position: absolute;
+  height: 414.5px;
+  left: 0px;
+  right: 0px;
+  top: 1px;
+
+  /* Orange */
+
+  background: #de8667;
+  z-index: -1;
 }
