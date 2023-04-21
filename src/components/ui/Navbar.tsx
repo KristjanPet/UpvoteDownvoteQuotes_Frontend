@@ -15,6 +15,7 @@ const Navbar: FC = () => {
   const [showError, setShowError] = useState(false)
   const [navbarClass, setNavbarClass] = useState('navbar-text')
   const [logoPath, setLogoPath] = useState('')
+  const [opacity, setOpacity] = useState('opacity-25')
   const location = useLocation()
   const isLoginPage = location.pathname === routes.LOGIN
   const isSignupPage = location.pathname === routes.SIGNUP
@@ -37,9 +38,11 @@ const Navbar: FC = () => {
     if (location.pathname === routes.HOME) {
       setNavbarClass('text-orange text-decoration-none')
       setLogoPath('/images/logoHorizontal2Orange.svg')
+      setOpacity('opacity-100')
     } else {
       setNavbarClass('text-white text-decoration-none')
       setLogoPath('/images/logoHorizontal2White.svg')
+      setOpacity('opacity-25')
     }
   }, [location.pathname])
 
@@ -96,7 +99,7 @@ const Navbar: FC = () => {
                   </li>
                   <li className="nav-item ">
                     <Link
-                      className="text-decoration-none text-light"
+                      className={`${opacity} text-decoration-none text-light`}
                       // to={`${routes.PROFILE}/users/edit`}
                       to={`${routes.PROFILE}`}
                       state={{
@@ -128,11 +131,12 @@ const Navbar: FC = () => {
                   </li>
                   <li className="nav-item">
                     <Link
-                      className="navbar-brand d-flex justify-content-center align-items-center p-1"
+                      className={`${opacity} navbar-brand navbar-add d-flex justify-content-center align-items-center bg-white rounded-circle`}
                       to={routes.HOME}
                     >
                       <img
                         src="/images/addIcon.svg"
+                        // className='bg-light'
                         alt="Add"
                         width={15}
                         height={15}

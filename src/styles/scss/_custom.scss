@@ -40,6 +40,11 @@ body {
   height: 40px !important;
 }
 
+.navbar-add {
+  width: 40px !important;
+  height: 40px !important;
+}
+
 .signup-avatar {
   width: 64px !important;
   height: 64px !important;
@@ -139,6 +144,10 @@ body {
   font-size: 35px;
 }
 
+.font-size-24 {
+  font-size: 24px;
+}
+
 .text-orange {
   color: #de8667;
 }
@@ -192,4 +201,29 @@ body {
 
   background: #de8667;
   z-index: -1;
+}
+
+.profile-box {
+  // display: flex;
+  // flex-direction: row;
+  // align-items: center;
+  padding: 16px 32px;
+  // gap: 32px;
+
+  position: absolute;
+  width: 315px;
+  height: 83px;
+  top: 368px;
+
+  /* White */
+
+  background: #ffffff;
+  /* Shadow */
+
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+}
+
+.mg-top-100 {
+  margin-top: 100px;
 }
