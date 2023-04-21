@@ -127,7 +127,7 @@ const LoginForm: FC = () => {
       <Form className="register-form" onSubmit={onSubmit}>
         <div className="d-flex flex-column justify-content-center align-items-center">
           <p className="signup-text-black m-0">
-            What is your <span className="signup-text-orange">name?</span>{' '}
+            What is your <span className="text-orange">name?</span>{' '}
           </p>
           <p className="signup-text-small">
             Your name will appear on quotes and your public profle.
@@ -326,7 +326,7 @@ const LoginForm: FC = () => {
         </Button>
         <div className="d-flex justify-content-between align-items-center mb-2">
           <p className="mb-0">Already have an account?</p>
-          <Link className="text-end navbar-text" to={routes.LOGIN}>
+          <Link className="text-end text-orange" to={routes.LOGIN}>
             Sign in
           </Link>
         </div>

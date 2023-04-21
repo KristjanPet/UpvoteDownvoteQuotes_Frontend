@@ -5,8 +5,7 @@ import { FC } from 'react'
 const Profile: FC = () => {
   return (
     <Layout>
-      {/* <ProfileForm> */}
-      Profile
+      <div className="rectangle"></div>
     </Layout>
   )
 }

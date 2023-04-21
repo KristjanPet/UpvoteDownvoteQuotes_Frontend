@@ -38,7 +38,7 @@ const LoginForm: FC = () => {
       <Form className="login-form" onSubmit={onSubmit}>
         <div className="d-flex flex-column justify-content-center align-items-center">
           <p className="signup-text-black m-0">
-            Welcome <span className="signup-text-orange">back!</span>{' '}
+            Welcome <span className="text-orange">back!</span>{' '}
           </p>
           <p className="signup-text-small ">
             Thank you for coming back. Hope you have a good day and inspire
@@ -110,7 +110,7 @@ const LoginForm: FC = () => {
         <div className="d-flex justify-content-between align-items-center mb-2">
           <p className="mb-0">Dont have account?</p>
           <Link
-            className="text-decoration-none text-end navbar-text"
+            className="text-decoration-none text-end text-orange"
             to={routes.SIGNUP}
           >
             Sign up

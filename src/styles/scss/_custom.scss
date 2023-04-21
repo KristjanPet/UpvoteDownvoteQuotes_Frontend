@@ -120,28 +120,31 @@ body {
   border: 2px solid #de8667;
 }
 
-.navbar-text {
-  color: #de8667;
-  text-decoration: none;
-}
+// .navbar-text {
+//   color: #de8667;
+//   text-decoration: none;
+// }
 
 .logout-button {
   border: none;
   background-color: transparent;
 }
 
-.navbar-text:hover {
-  color: #de8667;
-  text-decoration: none;
-}
+// .navbar-text:hover {
+//   color: #de8667;
+//   text-decoration: none;
+// }
 
 .signup-text-black {
   font-size: 35px;
 }
 
-.signup-text-orange {
-  font-size: 35px;
+.text-orange {
   color: #de8667;
+}
+
+.text-white {
+  color: white;
 }
 
 .signup-text-small {
@@ -176,4 +179,17 @@ body {
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+}
+
+.rectangle {
+  position: absolute;
+  height: 414.5px;
+  left: 0px;
+  right: 0px;
+  top: 1px;
+
+  /* Orange */
+
+  background: #de8667;
+  z-index: -1;
 }
