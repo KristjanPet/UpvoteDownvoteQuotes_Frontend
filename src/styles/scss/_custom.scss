@@ -227,3 +227,27 @@ body {
 .mg-top-100 {
   margin-top: 100px;
 }
+
+.quoteComponent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px 32px 16px 16px;
+  gap: 21px;
+  margin-bottom: 18px;
+
+  width: 420px;
+  height: 131px;
+
+  /* White */
+
+  background: #ffffff;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+}
+
+.quoteComponentPozition {
+  position: absolute;
+  top: 500px;
+  gap: 18px;
+}

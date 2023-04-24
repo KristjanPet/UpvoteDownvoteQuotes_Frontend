@@ -101,13 +101,12 @@ const Navbar: FC = () => {
                     <Link
                       className={`${opacity} text-decoration-none text-light`}
                       // to={`${routes.PROFILE}/users/edit`}
-                      to={`${routes.PROFILE}`}
+                      to={`${routes.PROFILE}/${authStore.user.id}`}
                       state={{
                         id: authStore.user?.id,
                         first_name: authStore.user?.first_name,
                         last_name: authStore.user?.last_name,
                         email: authStore.user?.email,
-                        role_id: authStore.user?.role?.id,
                         avatar: authStore.user?.avatar,
                         isActiveUser: true,
                       }}

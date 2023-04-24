@@ -70,7 +70,7 @@ const LoginForm: FC = () => {
           setShowError(true)
         } else {
           // Get user with avatar image
-          const userResponse = await API.fetchUser()
+          const userResponse = await API.fetchMe()
           if (
             userResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
           ) {
@@ -83,7 +83,7 @@ const LoginForm: FC = () => {
         }
       } else {
         // Get user with avatar image
-        const userResponse = await API.fetchUser()
+        const userResponse = await API.fetchMe()
         if (
           userResponse.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
         ) {
