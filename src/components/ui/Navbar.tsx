@@ -35,7 +35,11 @@ const Navbar: FC = () => {
   }
 
   useEffect(() => {
-    if (location.pathname === routes.HOME) {
+    if (
+      location.pathname === routes.HOME ||
+      location.pathname === routes.SIGNUP ||
+      location.pathname === routes.LOGIN
+    ) {
       setNavbarClass('text-orange text-decoration-none')
       setLogoPath('/images/logoHorizontal2Orange.svg')
       setOpacity('opacity-100')
