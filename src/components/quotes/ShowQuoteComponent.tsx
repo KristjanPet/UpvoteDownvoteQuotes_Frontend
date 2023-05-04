@@ -122,7 +122,7 @@ const ShowQuoteComponent: FC<Props> = ({ quote }) => {
       </div>
       {authStore.user?.id == quote.quote.author.id && (
         <div className="d-flex flex-column ">
-          <UpdateQuoteForm />
+          <UpdateQuoteForm quote_id={quote.quote.id} text={quote.quote.text} />
           <MdClose size={16} className="text-orange" />
         </div>
       )}

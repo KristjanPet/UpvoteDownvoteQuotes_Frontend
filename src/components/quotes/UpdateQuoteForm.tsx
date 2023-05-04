@@ -10,18 +10,23 @@ import Popup from 'reactjs-popup'
 import * as API from 'api/Api'
 import authStore from 'stores/auth.store'
 import { observer } from 'mobx-react'
-import { QuoteType } from 'models/quote'
+import { createQuoteField } from 'models/quote'
 import Avatar from 'react-avatar'
 import { AiOutlineSetting } from 'react-icons/ai'
 
-const UpdateQuoteForm: FC = () => {
+type props = {
+  quote_id: string
+  text: string
+}
+
+const UpdateQuoteForm: FC<props> = ({ quote_id, text }) => {
   const {
     handleSubmit,
     formState: { errors },
     register,
-  } = useForm<QuoteType>({
+  } = useForm<createQuoteField>({
     defaultValues: {
-      text: '',
+      text: text,
     },
   })
 
@@ -29,18 +34,18 @@ const UpdateQuoteForm: FC = () => {
   const [showError, setShowError] = useState(false)
   const [windowOpen, setWindowOpen] = useState(false)
 
-  const onSubmit = async (data: QuoteType) => {
-    // const response = await API.updateUser(data)
-    // if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
-    //   setApiError(response.data.message)
-    //   setShowError(true)
-    // } else if (response.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR) {
-    //   setApiError(response.data.message)
-    //   setShowError(true)
-    // } else {
-    //   authStore.login(response.data)
-    //   setWindowOpen(false)
-    // }
+  const onSubmit = async (data: createQuoteField) => {
+    const response = await API.updateQuote(data, quote_id)
+    if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
+      setApiError(response.data.message)
+      setShowError(true)
+    } else if (response.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR) {
+      setApiError(response.data.message)
+      setShowError(true)
+    } else {
+      authStore.login(response.data)
+      setWindowOpen(false)
+    }
   }
 
   return (
@@ -67,10 +72,10 @@ const UpdateQuoteForm: FC = () => {
               <textarea
                 aria-label="Text"
                 aria-describedby="text"
-                className="form-rounded w-100 h-auto mt-3 mb-4 signup-text-xsmall"
+                className="form-rounded w-100 h-auto mt-3 mb-4"
                 rows={4}
                 cols={50}
-                // {...register('text')}
+                {...register('text')}
               />
             </Form.Group>
 
