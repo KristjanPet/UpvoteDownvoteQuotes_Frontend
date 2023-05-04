@@ -14,6 +14,7 @@ import { routes } from 'constants/routesConstants'
 import { CheckVoteType } from 'models/vote'
 import CreateQuoteForm from './CreateQuoteForm'
 import UpdateQuoteForm from './UpdateQuoteForm'
+import DeleteQuoteForm from './DeleteQuoteForm'
 
 interface Props {
   quote: QuoteNumberType
@@ -123,7 +124,7 @@ const ShowQuoteComponent: FC<Props> = ({ quote }) => {
       {authStore.user?.id == quote.quote.author.id && (
         <div className="d-flex flex-column ">
           <UpdateQuoteForm quote_id={quote.quote.id} text={quote.quote.text} />
-          <MdClose size={16} className="text-orange" />
+          <DeleteQuoteForm quote_id={quote.quote.id} />
         </div>
       )}
     </div>

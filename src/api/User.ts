@@ -47,6 +47,9 @@ export const updateQuote = async (data: createQuoteField, id: string) =>
     data,
   )
 
+export const deleteQuote = async (id: string) =>
+  apiRequest<QuoteType, void>('delete', apiRoutes.FETCH_USER + '/quotes/' + id)
+
 export const fetchQuotesNumber = async (id: string) =>
   apiRequest<undefined, UserType>(
     'get',
