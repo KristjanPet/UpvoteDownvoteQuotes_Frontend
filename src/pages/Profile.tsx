@@ -27,12 +27,15 @@ const Profile: FC = () => {
     ['voteNumber'],
     () => API.fetchVotesNumber(userId || ''),
   )
+
   const { data: mostLikedQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
   >(['mostLikedQuotes'], () => API.getMostLikedQuotesByUser(userId || ''))
+
   const { data: recentQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
   >(['mostRecentQuotes'], () => API.getRecentQuotesByUser(userId || ''))
+
   const { data: likedQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
   >(['likedQuotes'], () => API.getLikedQuotesByUser(userId || ''))

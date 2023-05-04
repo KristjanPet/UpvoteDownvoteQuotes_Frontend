@@ -8,6 +8,9 @@ export const fetchQuote = async (id: string) =>
     apiRoutes.FETCH_QUOTE + '/' + id,
   )
 
+export const getAllMostLikedQuotes = async () =>
+  apiRequest<undefined, QuoteNumberType[]>('get', apiRoutes.FETCH_QUOTE)
+
 export const getMostLikedQuotesByUser = async (id: string) =>
   apiRequest<undefined, QuoteNumberType[]>(
     'get',
