@@ -11,5 +11,14 @@ export type UserType = {
 
 export interface QuoteNumberType {
   quote: QuoteType
-  voteNum: number
+  votes: number
+}
+
+export interface UpdateUserFields {
+  first_name?: string
+  last_name?: string
+  email?: string
+  password?: string
+  confirm_password?: string
+  avatar?: string
 }

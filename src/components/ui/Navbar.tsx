@@ -8,6 +8,7 @@ import ToastContainer from 'react-bootstrap/esm/ToastContainer'
 import Toast from 'react-bootstrap/Toast'
 import * as API from 'api/Api'
 import Avatar from 'react-avatar'
+import SettingsForm from 'components/user/SettingsForm'
 
 const Navbar: FC = () => {
   const navigate = useNavigate()
@@ -88,9 +89,7 @@ const Navbar: FC = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item ">
-                    <NavLink to={routes.HOME} className={navbarClass}>
-                      Settings
-                    </NavLink>
+                    <SettingsForm navbarClass={navbarClass} />
                   </li>
                   <li className="nav-item ">
                     <button

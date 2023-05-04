@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react'
 import { QuoteNumberType } from 'models/auth'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import * as API from 'api/Api'
 import { QuoteType } from 'models/quote'
@@ -11,38 +11,90 @@ import Avatar from 'react-avatar'
 import authStore from 'stores/auth.store'
 import { Link } from 'react-router-dom'
 import { routes } from 'constants/routesConstants'
+import { CheckVoteType } from 'models/vote'
 
 interface Props {
-  quote: QuoteType
+  quote: QuoteNumberType
 }
 
 const ShowQuoteComponent: FC<Props> = ({ quote }) => {
-  const { data: quoteData } = useQuery<{ data: QuoteNumberType } | undefined>(
-    [quote?.id],
-    () => API.fetchQuote(quote?.id || ''),
+  // const { data: quoteData } = useQuery<{ data: QuoteNumberType } | undefined>(
+  //   [quote?.id],
+  //   () => API.fetchQuote(quote?.id || ''),
+  // )
+  const [didClick, setDidClick] = useState(false)
+  const { data: checkVoteData } = useQuery<{ data: CheckVoteType } | undefined>(
+    ['checkVote', didClick],
+    () => API.checkVote(quote.quote.id || ''),
   )
-  // console.log(quoteData ? quoteData.data.quote.id: '')
+
+  console.log(checkVoteData?.data)
+
+  const [votedDown, setVotedDown] = useState(false)
+  const [votedUp, setVotedUp] = useState(false)
+
+  // useEffect(() => {
+  //   console.log(checkVoteData?.data.didVote)
+  //   if (checkVoteData?.data.didVote) {
+
+  //     setVotedUp(checkVoteData.data.upDown === true)
+  //     setVotedDown(checkVoteData.data.upDown === true)
+  //   }
+  // }, [checkVoteData])
+
+  const handleVote = async (upDown: boolean) => {
+    setDidClick(!didClick)
+    if (upDown) {
+      if (!checkVoteData?.data.upDown) {
+        await API.postUpVote(quote.quote.id)
+        setVotedUp(true)
+        setVotedDown(false)
+      } else if (checkVoteData.data.upDown) {
+        // await API.removeVote(quote.quote.id) TODO
+        setVotedUp(false)
+        setVotedDown(false)
+      }
+    } else {
+      if (checkVoteData?.data.upDown) {
+        await API.postDownVote(quote.quote.id)
+        setVotedUp(false)
+        setVotedDown(true)
+      } else if (!checkVoteData?.data.upDown) {
+        // await API.removeVote(quote.quote.id) TODO
+        setVotedUp(false)
+        setVotedDown(false)
+      }
+    }
+  }
+
+  // const handleDownVote = async () => {
+  //   await API.postDownVote(quote.quote.id)
+  //   setVotedUp(false)
+  //   setVotedDown(true)
+  // }
 
   return (
     <div
-      key={quoteData?.data.quote.id}
+      key={quote.quote.id}
       className="quoteComponent d-flex justify-content-between"
     >
       <div className="d-flex flex-column">
-        <div>
-          <RiArrowUpSLine size={24} />
+        <div onClick={() => handleVote(true)}>
+          <RiArrowUpSLine size={24} color={votedUp ? 'orange' : 'black'} />
         </div>
-        <div className="d-flex justify-content-center ">
-          {quoteData?.data.voteNum}
-        </div>
+        <div className="d-flex justify-content-center ">{quote.votes}</div>
         <div>
-          <RiArrowDownSLine size={24} />
+          <RiArrowDownSLine
+            size={24}
+            color={votedDown ? 'orange' : 'black'}
+            onClick={() => handleVote(false)}
+          />
         </div>
       </div>
       <div className="d-flex flex-column flex-grow">
-        <p className=" mt-3">{quoteData?.data.quote.text || 'ni ni'}</p>
+        <p className=" mt-3">{quote.quote.text || 'ni ni'}</p>
         <Link
-          to={`${routes.PROFILE}/${quoteData?.data.quote.author.id}`}
+          to={`${routes.PROFILE}/${quote.quote.author.id}`}
           className="text-decoration-none text-black"
         >
           <div className="d-flex">
@@ -50,25 +102,23 @@ const ShowQuoteComponent: FC<Props> = ({ quote }) => {
               className="quote-avatar mx-0"
               round
               src={
-                quoteData?.data.quote.author.avatar
-                  ? `${process.env.REACT_APP_API_URL}/files/${quoteData?.data.quote.author.avatar}`
+                quote.quote.author.avatar
+                  ? `${process.env.REACT_APP_API_URL}/files/${quote.quote.author.avatar}`
                   : '/images/blankAvatarIcon.svg'
               }
               alt={
-                quoteData?.data.quote.author.first_name ||
-                quoteData?.data.quote.author.last_name
-                  ? `${quoteData?.data.quote.author.first_name} ${quoteData?.data.quote.author.last_name}`
-                  : quoteData?.data.quote.author.email
+                quote.quote.author.first_name || quote.quote.author.last_name
+                  ? `${quote.quote.author.first_name} ${quote.quote.author.last_name}`
+                  : quote.quote.author.email
               }
             />
             <p className="mx-2 font-size-12 pt-1">
-              {quoteData?.data.quote.author.first_name}{' '}
-              {quoteData?.data.quote.author.last_name}
+              {quote.quote.author.first_name} {quote.quote.author.last_name}
             </p>
           </div>
         </Link>
       </div>
-      {authStore.user?.id == quoteData?.data.quote.author.id && (
+      {authStore.user?.id == quote.quote.author.id && (
         <div className="d-flex flex-column ">
           <AiOutlineSetting size={16} className="mb-3 text-orange" />
           <MdClose size={16} className="text-orange" />

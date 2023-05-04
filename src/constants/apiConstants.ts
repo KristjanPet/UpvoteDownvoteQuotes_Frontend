@@ -5,8 +5,6 @@ export enum apiRoutes {
   REFRESH_TOKENS = '/auth/refresh',
   FETCH_ME = '/auth',
   FETCH_USER = '/me',
-  FETCH_QUOTES_NUMBER = '/me',
-  FETCH_VOTES_NUMBER = '/me',
   USERS_PREFIX = '/users',
   UPLOAD_AVATAR_IMAGE = '/users/upload',
   UPLOAD_PRODUCT_IMAGE = '/products/upload',

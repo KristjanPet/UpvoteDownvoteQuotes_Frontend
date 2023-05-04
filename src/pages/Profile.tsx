@@ -7,7 +7,7 @@ import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import authStore from 'stores/auth.store'
 import * as API from 'api/Api'
-import { UserType } from 'models/auth'
+import { QuoteNumberType, UserType } from 'models/auth'
 
 // interface Props {
 //   defaultValues?: UserType
@@ -27,26 +27,59 @@ const Profile: FC = () => {
     ['voteNumber'],
     () => API.fetchVotesNumber(userId || ''),
   )
-  // console.log(userData ? userData.data.quote : '')
+  const { data: mostLikedQuotesData } = useQuery<
+    { data: QuoteNumberType[] } | undefined
+  >(['mostLikedQuotes'], () => API.getMostLikedQuotesByUser(userId || ''))
+  const { data: recentQuotesData } = useQuery<
+    { data: QuoteNumberType[] } | undefined
+  >(['mostRecentQuotes'], () => API.getRecentQuotesByUser(userId || ''))
+  const { data: likedQuotesData } = useQuery<
+    { data: QuoteNumberType[] } | undefined
+  >(['likedQuotes'], () => API.getLikedQuotesByUser(userId || ''))
 
-  const quotesComponent =
-    userData?.data.quote?.map((quote) => (
-      <div key={quote.id}>
-        <ShowQuoteComponent key={quote?.id} quote={quote}></ShowQuoteComponent>
+  const quotesComponent = (data: QuoteNumberType[]) =>
+    data?.map((quote) => (
+      <div key={quote.quote.id}>
+        <ShowQuoteComponent key={quote?.quote.id} quote={quote} />
       </div>
     )) || []
 
-  const showQuoteComponent = () => {
+  const showQuoteComponent = (number: number) => {
     // console.log(userData?.data.quote)
 
-    if (userData && userData.data.quote && userData.data.quote.length > 0) {
-      return <div>{quotesComponent}</div>
-    } else {
-      return (
-        <div>
-          <p>No quotes found for this user.</p>
-        </div>
-      )
+    switch (number) {
+      case 1:
+        if (mostLikedQuotesData && mostLikedQuotesData.data.length > 0) {
+          return <div>{quotesComponent(mostLikedQuotesData.data)}</div>
+        } else {
+          return (
+            <div>
+              <p>No quotes found for this user.</p>
+            </div>
+          )
+        }
+      case 2:
+        // console.log(recentQuotesData || 'prazno sve')
+        if (recentQuotesData && recentQuotesData.data.length > 0) {
+          return <div>{quotesComponent(recentQuotesData.data)}</div>
+        } else {
+          return (
+            <div>
+              <p>User did not publish any ecent quotes.</p>
+            </div>
+          )
+        }
+
+      case 3:
+        if (likedQuotesData && likedQuotesData.data.length > 0) {
+          return <div>{quotesComponent(likedQuotesData.data)}</div>
+        } else {
+          return (
+            <div>
+              <p>No liked quotes found for this user.</p>
+            </div>
+          )
+        }
     }
   }
 
@@ -86,20 +119,20 @@ const Profile: FC = () => {
         </div>
       </div>
 
-      <div className="d-flex bg-light align-items-flex-end quoteComponentPozition mx-3">
-        <div className="align-self-center mb-1">
+      <div className="d-flex quote-component-pozition mx-3">
+        <div className="mb-1">
           <p className="text-orange font-size-24 text-align-center px-3">
             Most liked quotes
           </p>
-          {showQuoteComponent()}
+          {showQuoteComponent(1)}
         </div>
-        <div className="align-self-center">
+        <div>
           <p className="font-size-24 text-align-center px-3">Most recent</p>
-          {showQuoteComponent()}
+          {showQuoteComponent(2)}
         </div>
-        <div className="align-self-center">
+        <div className="">
           <p className="font-size-24 text-align-center px-3">Liked</p>
-          {showQuoteComponent()}
+          {showQuoteComponent(3)}
         </div>
       </div>
     </Layout>

@@ -2,7 +2,7 @@ import { apiRoutes } from 'constants/apiConstants'
 import { apiRequest } from './Api'
 import { LoginUserFields } from 'hooks/react-hook-form/useLogin'
 import { RegisterUserFields } from 'hooks/react-hook-form/useRegister'
-import { UserType } from 'models/auth'
+import { UpdateUserFields, UserType } from 'models/auth'
 
 export const fetchMe = async () =>
   apiRequest<undefined, UserType>('get', apiRoutes.FETCH_ME)
@@ -25,16 +25,23 @@ export const login = async (data: LoginUserFields) =>
 export const register = async (data: RegisterUserFields) =>
   apiRequest<RegisterUserFields, void>('post', apiRoutes.SIGNUP, data)
 
+export const updateUser = async (data: UpdateUserFields) =>
+  apiRequest<UpdateUserFields, void>(
+    'patch',
+    `${apiRoutes.FETCH_USER}/update-user`,
+    data,
+  )
+
 export const fetchQuotesNumber = async (id: string) =>
   apiRequest<undefined, UserType>(
     'get',
-    apiRoutes.FETCH_QUOTES_NUMBER + '/' + id + '/quotes',
+    apiRoutes.FETCH_USER + '/' + id + '/quotes',
   )
 
 export const fetchVotesNumber = async (id: string) =>
   apiRequest<undefined, UserType>(
     'get',
-    apiRoutes.FETCH_VOTES_NUMBER + '/' + id + '/votes',
+    apiRoutes.FETCH_USER + '/' + id + '/votes',
   )
 
 export const uploadAvatar = async (formData: FormData, id: string) =>
