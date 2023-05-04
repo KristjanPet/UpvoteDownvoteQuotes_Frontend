@@ -100,7 +100,7 @@ const LoginForm: FC = () => {
         />
 
         <Button
-          className="w-100 orange-border login-button-litlle"
+          className="w-100 orange-border login-button-litlle mb-2"
           type="submit"
         >
           {' '}

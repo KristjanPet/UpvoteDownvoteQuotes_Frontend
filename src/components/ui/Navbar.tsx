@@ -8,6 +8,7 @@ import ToastContainer from 'react-bootstrap/esm/ToastContainer'
 import Toast from 'react-bootstrap/Toast'
 import * as API from 'api/Api'
 import Avatar from 'react-avatar'
+import SettingsForm from 'components/user/SettingsForm'
 
 const Navbar: FC = () => {
   const navigate = useNavigate()
@@ -15,6 +16,7 @@ const Navbar: FC = () => {
   const [showError, setShowError] = useState(false)
   const [navbarClass, setNavbarClass] = useState('navbar-text')
   const [logoPath, setLogoPath] = useState('')
+  const [opacity, setOpacity] = useState('opacity-25')
   const location = useLocation()
   const isLoginPage = location.pathname === routes.LOGIN
   const isSignupPage = location.pathname === routes.SIGNUP
@@ -34,12 +36,18 @@ const Navbar: FC = () => {
   }
 
   useEffect(() => {
-    if (location.pathname === routes.HOME) {
+    if (
+      location.pathname === routes.HOME ||
+      location.pathname === routes.SIGNUP ||
+      location.pathname === routes.LOGIN
+    ) {
       setNavbarClass('text-orange text-decoration-none')
       setLogoPath('/images/logoHorizontal2Orange.svg')
+      setOpacity('opacity-100')
     } else {
       setNavbarClass('text-white text-decoration-none')
       setLogoPath('/images/logoHorizontal2White.svg')
+      setOpacity('opacity-25')
     }
   }, [location.pathname])
 
@@ -81,9 +89,7 @@ const Navbar: FC = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item ">
-                    <NavLink to={routes.HOME} className={navbarClass}>
-                      Settings
-                    </NavLink>
+                    <SettingsForm navbarClass={navbarClass} />
                   </li>
                   <li className="nav-item ">
                     <button
@@ -96,15 +102,14 @@ const Navbar: FC = () => {
                   </li>
                   <li className="nav-item ">
                     <Link
-                      className="text-decoration-none text-light"
+                      className={`${opacity} text-decoration-none text-light`}
                       // to={`${routes.PROFILE}/users/edit`}
-                      to={`${routes.PROFILE}`}
+                      to={`${routes.PROFILE}/${authStore.user.id}`}
                       state={{
                         id: authStore.user?.id,
                         first_name: authStore.user?.first_name,
                         last_name: authStore.user?.last_name,
                         email: authStore.user?.email,
-                        role_id: authStore.user?.role?.id,
                         avatar: authStore.user?.avatar,
                         isActiveUser: true,
                       }}
@@ -128,11 +133,12 @@ const Navbar: FC = () => {
                   </li>
                   <li className="nav-item">
                     <Link
-                      className="navbar-brand d-flex justify-content-center align-items-center p-1"
+                      className={`${opacity} navbar-brand navbar-add d-flex justify-content-center align-items-center bg-white rounded-circle`}
                       to={routes.HOME}
                     >
                       <img
                         src="/images/addIcon.svg"
+                        // className='bg-light'
                         alt="Add"
                         width={15}
                         height={15}

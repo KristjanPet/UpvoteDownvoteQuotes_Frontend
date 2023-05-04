@@ -56,7 +56,7 @@ export const AppRoutes: AppRoute[] = [
   },
   {
     type: RouteType.PRIVATE,
-    path: '/profile',
+    path: '/profile/:userId',
     children: <Profile />,
   },
 
