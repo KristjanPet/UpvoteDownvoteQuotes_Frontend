@@ -9,6 +9,7 @@ import Toast from 'react-bootstrap/Toast'
 import * as API from 'api/Api'
 import Avatar from 'react-avatar'
 import SettingsForm from 'components/user/SettingsForm'
+import CreateQuoteForm from 'components/quotes/CreateQuoteForm'
 
 const Navbar: FC = () => {
   const navigate = useNavigate()
@@ -132,7 +133,7 @@ const Navbar: FC = () => {
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link
+                    {/* <Link
                       className={`${opacity} navbar-brand navbar-add d-flex justify-content-center align-items-center bg-white rounded-circle`}
                       to={routes.HOME}
                     >
@@ -143,7 +144,8 @@ const Navbar: FC = () => {
                         width={15}
                         height={15}
                       />
-                    </Link>
+                    </Link> */}
+                    <CreateQuoteForm opacity={opacity} />
                   </li>
                 </>
               ) : (

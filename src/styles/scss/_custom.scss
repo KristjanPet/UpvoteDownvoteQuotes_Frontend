@@ -119,7 +119,8 @@ body {
   gap: 10px;
   text-decoration: none;
 
-  width: 137px;
+  // width: 137px;
+  min-width: 137px;
   height: 40px;
   left: 16px;
   top: 77px;
@@ -159,6 +160,18 @@ body {
   font-size: 35px;
 }
 
+.font-size-98 {
+  font-size: 98px;
+}
+
+.font-size-61 {
+  font-size: 61px;
+}
+
+.font-size-35 {
+  font-size: 35px;
+}
+
 .font-size-24 {
   font-size: 24px;
 }
@@ -175,6 +188,10 @@ body {
   color: white;
 }
 
+.text-inline {
+  display: inline;
+}
+
 .signup-text-small {
   font-size: 16px;
   text-align: center;
@@ -183,6 +200,31 @@ body {
 .signup-text-xsmall {
   font-size: 12px;
   font-weight: bold;
+}
+
+.form-rounded {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 30px 8px 24px;
+  gap: 8px;
+
+  width: 420px;
+  height: 40px;
+
+  background: #ffffff;
+  /* Orange */
+
+  border: 2px solid #de8667;
+  border-radius: 16px;
+  text-decoration-color: #de8667;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
 }
 
 .form-section-orange {
@@ -254,6 +296,10 @@ body {
   margin-top: 100px;
 }
 
+.mg-top-150 {
+  margin-top: 150px;
+}
+
 .quoteComponent {
   display: flex;
   flex-direction: row;
@@ -263,7 +309,7 @@ body {
   margin-bottom: 18px;
 
   width: 420px;
-  height: 131px;
+  // height: 131px;
 
   /* White */
 
@@ -310,6 +356,29 @@ body {
   z-index: 20;
 }
 
+.settings-box-small {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px;
+  gap: 16px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 317px;
+
+  /* White */
+
+  background: #ffffff;
+  /* Shadow */
+
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  z-index: 20;
+}
+
 .overlay {
   background-color: rgba(0, 0, 0, 0.1); /* Black with 50% opacity */
   position: fixed;
@@ -322,4 +391,26 @@ body {
 
 .w-auto {
   width: auto;
+}
+
+.w-530 {
+  width: 530px;
+}
+
+.h-500 {
+  min-height: 507px;
+  max-height: 530px;
+}
+
+.pl-40 {
+  padding-left: 40px;
+}
+
+.line-space-0 {
+  line-height: 1.005;
+}
+
+.home-page-container {
+  position: relative;
+  top: 150px;
 }
