@@ -12,6 +12,8 @@ import authStore from 'stores/auth.store'
 import { Link } from 'react-router-dom'
 import { routes } from 'constants/routesConstants'
 import { CheckVoteType } from 'models/vote'
+import CreateQuoteForm from './CreateQuoteForm'
+import UpdateQuoteForm from './UpdateQuoteForm'
 
 interface Props {
   quote: QuoteNumberType
@@ -120,7 +122,7 @@ const ShowQuoteComponent: FC<Props> = ({ quote }) => {
       </div>
       {authStore.user?.id == quote.quote.author.id && (
         <div className="d-flex flex-column ">
-          <AiOutlineSetting size={16} className="mb-3 text-orange" />
+          <UpdateQuoteForm />
           <MdClose size={16} className="text-orange" />
         </div>
       )}

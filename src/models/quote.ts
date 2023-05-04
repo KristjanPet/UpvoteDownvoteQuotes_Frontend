@@ -5,3 +5,7 @@ export interface QuoteType {
   author: UserType
   text: string
 }
+
+export interface createQuoteField {
+  text: string
+}

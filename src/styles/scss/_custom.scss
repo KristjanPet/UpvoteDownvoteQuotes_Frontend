@@ -185,6 +185,31 @@ body {
   font-weight: bold;
 }
 
+.form-rounded {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 30px 8px 24px;
+  gap: 8px;
+
+  width: 420px;
+  height: 40px;
+
+  background: #ffffff;
+  /* Orange */
+
+  border: 2px solid #de8667;
+  border-radius: 16px;
+  text-decoration-color: #de8667;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
 .form-section-orange {
   display: flex;
   flex-direction: row;
