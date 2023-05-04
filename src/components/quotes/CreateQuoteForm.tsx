@@ -42,7 +42,6 @@ const CreateQuoteForm: FC<props> = ({ opacity }) => {
       setApiError(response.data.message)
       setShowError(true)
     } else {
-      authStore.login(response.data)
       setWindowOpen(false)
     }
   }

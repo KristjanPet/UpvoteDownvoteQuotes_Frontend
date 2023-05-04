@@ -33,6 +33,7 @@ const UpdateQuoteForm: FC<props> = ({ quote_id, text }) => {
   const [apiError, setApiError] = useState('')
   const [showError, setShowError] = useState(false)
   const [windowOpen, setWindowOpen] = useState(false)
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
   const onSubmit = async (data: createQuoteField) => {
     const response = await API.updateQuote(data, quote_id)
@@ -43,8 +44,8 @@ const UpdateQuoteForm: FC<props> = ({ quote_id, text }) => {
       setApiError(response.data.message)
       setShowError(true)
     } else {
-      authStore.login(response.data)
       setWindowOpen(false)
+      setConfirmOpen(true)
     }
   }
 
@@ -56,7 +57,7 @@ const UpdateQuoteForm: FC<props> = ({ quote_id, text }) => {
         onClick={() => setWindowOpen(true)}
       />
 
-      {/* PROFILE SETTINGS */}
+      {/* EDIT QUOTE */}
       <Popup modal nested className="position-relative" open={windowOpen}>
         <div className="overlay" onClick={() => setWindowOpen(false)}></div>
 
@@ -111,6 +112,30 @@ const UpdateQuoteForm: FC<props> = ({ quote_id, text }) => {
               </Toast>
             </ToastContainer>
           )}
+        </div>
+      </Popup>
+
+      {/* CONFORAMTION */}
+      <Popup modal nested className="position-relative" open={confirmOpen}>
+        <div className="overlay" onClick={() => setConfirmOpen(false)}></div>
+
+        <div className=" settings-box-small">
+          {/* <div className="d-flex flex-column "> */}
+          <p className="font-size-24 m-0">
+            Your <span className="text-orange">quote </span>was edited.{' '}
+          </p>
+          {/* </div> */}
+
+          <div className="d-flex justify-content-center w-100 my-2">
+            <button
+              className=" signup-button-litlle"
+              type="button"
+              onClick={() => setConfirmOpen(false)}
+            >
+              {' '}
+              Close{' '}
+            </button>
+          </div>
         </div>
       </Popup>
     </>
