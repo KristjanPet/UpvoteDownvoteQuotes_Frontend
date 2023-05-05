@@ -15,7 +15,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <Router>
         <App />
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-left" />
+        {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-left" /> */}
       </Router>
     </QueryClientProvider>
   </React.StrictMode>,

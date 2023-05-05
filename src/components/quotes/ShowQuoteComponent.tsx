@@ -31,7 +31,7 @@ const ShowQuoteComponent: FC<Props> = ({ quote }) => {
     () => API.checkVote(quote.quote.id || ''),
   )
 
-  console.log(checkVoteData?.data)
+  // console.log(checkVoteData?.data)
 
   const [votedDown, setVotedDown] = useState(false)
   const [votedUp, setVotedUp] = useState(false)
