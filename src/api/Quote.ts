@@ -8,8 +8,20 @@ export const fetchQuote = async (id: string) =>
     apiRoutes.FETCH_QUOTE + '/' + id,
   )
 
+export const fetchRandomQuote = async () =>
+  apiRequest<undefined, QuoteNumberType>(
+    'get',
+    apiRoutes.FETCH_QUOTE + '/random/get',
+  )
+
 export const getAllMostLikedQuotes = async () =>
   apiRequest<undefined, QuoteNumberType[]>('get', apiRoutes.FETCH_QUOTE)
+
+export const getAllRecentQuotes = async () =>
+  apiRequest<undefined, QuoteNumberType[]>(
+    'get',
+    apiRoutes.FETCH_QUOTE + '/recent/get',
+  )
 
 export const getMostLikedQuotesByUser = async (id: string) =>
   apiRequest<undefined, QuoteNumberType[]>(

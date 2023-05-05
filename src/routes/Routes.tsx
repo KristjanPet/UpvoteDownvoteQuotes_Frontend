@@ -20,7 +20,6 @@ const Home = lazy(() => import('pages/Home'))
 
 /* Private routes */
 const Dashboard = lazy(() => import('pages/Dashboard'))
-const DashboardProfile = lazy(() => import('pages/Dashboard/Profile'))
 const Profile = lazy(() => import('pages/Profile'))
 
 /* Restricted routes */
@@ -48,11 +47,6 @@ export const AppRoutes: AppRoute[] = [
     type: RouteType.PRIVATE,
     path: '/dashboard',
     children: <Dashboard />,
-  },
-  {
-    type: RouteType.PRIVATE,
-    path: '/dashboard/profile',
-    children: <DashboardProfile />,
   },
   {
     type: RouteType.PRIVATE,
