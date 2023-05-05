@@ -1,14 +1,13 @@
+html {
+  height: 100%;
+}
+
 body {
   font-family: 'Raleway';
 }
 
 .layout-container {
   height: calc(100vh - 200px);
-}
-
-#login-page footer,
-#signup-page footer {
-  display: none !important;
 }
 
 .login-form {
@@ -413,4 +412,25 @@ body {
 .home-page-container {
   position: relative;
   top: 150px;
+}
+
+.footer {
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  padding: 32px 310px;
+  // gap: 16px;
+
+  // position: fixed;
+  // left: 0px;
+  // right: 0px;
+  // top: 97.67%;
+  // bottom: 0%;
+  width: 100%;
+  margin-top: auto;
+  // bottom: 0;
+  /* Orange */
+  background: #de8667;
+  /* Shadow */
 }

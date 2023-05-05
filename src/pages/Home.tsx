@@ -27,14 +27,14 @@ const Home: FC = () => {
   useEffect(() => {
     const fetchRandomQuote = async () => {
       const randomQuote = (await API.fetchRandomQuote()).data as QuoteNumberType
-      console.log(randomQuote)
+      // console.log(randomQuote)
       setRandomQuote(randomQuote)
     }
     fetchRandomQuote()
   }, [])
 
   const showLikedQuoteComponent = () => {
-    // console.log(userData?.data.quote)
+    // console.log(mostLikedQuotesData?.data)
     if (mostLikedQuotesData && mostLikedQuotesData.data.length > 0) {
       return (
         <>
@@ -53,7 +53,7 @@ const Home: FC = () => {
   }
 
   const showRecentQuoteComponent = () => {
-    // console.log(userData?.data.quote)
+    // console.log(mostRecentQuotesData?.data)
     if (mostRecentQuotesData && mostRecentQuotesData.data.length > 0) {
       return (
         <>
