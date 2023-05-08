@@ -1,7 +1,7 @@
 import ShowQuoteComponent from 'components/quotes/ShowQuoteComponent'
 import DashboardLayout from 'components/ui/DashboardLayout'
 import Layout from 'components/ui/Layout'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import Avatar from 'react-avatar'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
@@ -15,6 +15,8 @@ import { QuoteNumberType, UserType } from 'models/auth'
 
 const Profile: FC = () => {
   const { userId } = useParams()
+  const [pageNumber, setPageNumber] = useState(1)
+
   const { data: userData } = useQuery<{ data: UserType } | undefined>(
     ['user'],
     () => API.fetchUser(userId || ''),
@@ -30,15 +32,19 @@ const Profile: FC = () => {
 
   const { data: mostLikedQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
-  >(['mostLikedQuotes'], () => API.getMostLikedQuotesByUser(userId || ''))
+  >(['mostLikedQuotes'], () =>
+    API.getMostLikedQuotesByUser(userId || '', pageNumber),
+  )
 
   const { data: recentQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
-  >(['mostRecentQuotes'], () => API.getRecentQuotesByUser(userId || ''))
+  >(['mostRecentQuotes'], () =>
+    API.getRecentQuotesByUser(userId || '', pageNumber),
+  )
 
   const { data: likedQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
-  >(['likedQuotes'], () => API.getLikedQuotesByUser(userId || ''))
+  >(['likedQuotes'], () => API.getLikedQuotesByUser(userId || '', pageNumber))
 
   const quotesComponent = (data: QuoteNumberType[]) =>
     data?.map((quote) => (
@@ -122,20 +128,30 @@ const Profile: FC = () => {
         </div>
       </div>
 
-      <div className="d-flex quote-component-pozition mx-3">
-        <div className="mb-1">
-          <p className="text-orange font-size-24 text-align-center px-3">
-            Most liked quotes
-          </p>
-          {showQuoteComponent(1)}
+      <div className="d-flex flex-column quote-component-pozition">
+        <div className="d-flex mx-3 gap-3">
+          <div className="mb-1">
+            <p className="text-orange font-size-24 text-align-center px-3">
+              Most liked quotes
+            </p>
+            {showQuoteComponent(1)}
+          </div>
+          <div>
+            <p className="font-size-24 text-align-center px-3">Most recent</p>
+            {showQuoteComponent(2)}
+          </div>
+          <div className="">
+            <p className="font-size-24 text-align-center px-3">Liked</p>
+            {showQuoteComponent(3)}
+          </div>
         </div>
-        <div>
-          <p className="font-size-24 text-align-center px-3">Most recent</p>
-          {showQuoteComponent(2)}
-        </div>
-        <div className="">
-          <p className="font-size-24 text-align-center px-3">Liked</p>
-          {showQuoteComponent(3)}
+        <div className="d-flex justify-content-center align-items-center">
+          <button
+            onClick={() => setPageNumber(pageNumber + 1)}
+            className="login-button-litlle mt-4"
+          >
+            Load more
+          </button>
         </div>
       </div>
     </Layout>

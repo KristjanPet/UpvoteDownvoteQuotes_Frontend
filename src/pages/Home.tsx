@@ -10,12 +10,15 @@ import authStore from 'stores/auth.store'
 
 const Home: FC = () => {
   const [randomQuote, setRandomQuote] = useState<QuoteNumberType>()
+  const [pageNumberLikedQuotes, setPageNumberLikedQuotes] = useState(1)
+  const [pageNumberRecentQuotes, setPageNumberRecentQuotes] = useState(1)
+
   const { data: mostLikedQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
-  >(['mostLikedQuotes'], () => API.getAllMostLikedQuotes())
+  >(['mostLikedQuotes'], () => API.getAllMostLikedQuotes(pageNumberLikedQuotes))
   const { data: mostRecentQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
-  >(['mostRecentQuotes'], () => API.getAllRecentQuotes())
+  >(['mostRecentQuotes'], () => API.getAllRecentQuotes(pageNumberRecentQuotes))
 
   const quotesComponent = (data: QuoteNumberType[]) =>
     data?.map((quote) => (
@@ -105,12 +108,14 @@ const Home: FC = () => {
             </div>
             <div className="d-flex h-500">{showLikedQuoteComponent()}</div>
             <div className="d-flex justify-content-center align-items-center">
-              <NavLink
-                to={routes.SIGNUP}
-                className={'text-decoration-none mt-4'}
+              <button
+                onClick={() =>
+                  setPageNumberLikedQuotes(pageNumberLikedQuotes + 1)
+                }
+                className="login-button-litlle mt-4"
               >
-                <button className="login-button-litlle">Load more</button>
-              </NavLink>
+                Load more
+              </button>
             </div>
             <div className="d-flex justify-content-center align-items-center mb-3 mg-top-150 pl-40">
               <div className="d-flex flex-column w-50">
@@ -126,12 +131,14 @@ const Home: FC = () => {
             </div>
             <div className="d-flex h-500">{showRecentQuoteComponent()}</div>
             <div className="d-flex justify-content-center align-items-center">
-              <NavLink
-                to={routes.SIGNUP}
-                className={'text-decoration-none mt-4'}
+              <button
+                onClick={() =>
+                  setPageNumberRecentQuotes(pageNumberRecentQuotes + 1)
+                }
+                className="login-button-litlle mt-4"
               >
-                <button className="login-button-litlle">Load more</button>
-              </NavLink>
+                Load more
+              </button>
             </div>
           </div>
         ) : (
