@@ -15,17 +15,25 @@ const Home: FC = () => {
 
   const { data: mostLikedQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
-  >(['mostLikedQuotes'], () => API.getAllMostLikedQuotes(pageNumberLikedQuotes))
+  >(['mostLikedQuotes', pageNumberLikedQuotes], () =>
+    API.getAllMostLikedQuotes(pageNumberLikedQuotes),
+  )
   const { data: mostRecentQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
-  >(['mostRecentQuotes'], () => API.getAllRecentQuotes(pageNumberRecentQuotes))
+  >(['mostRecentQuotes', pageNumberRecentQuotes], () =>
+    API.getAllRecentQuotes(pageNumberRecentQuotes),
+  )
 
   const quotesComponent = (data: QuoteNumberType[]) =>
-    data?.map((quote) => (
-      <div key={quote.quote.id}>
-        <ShowQuoteComponent key={quote?.quote.id} quote={quote} />
-      </div>
-    )) || []
+    data?.map((quote, index) => {
+      return (
+        <>
+          <div key={quote.quote.id} className="col-xl-4 col-md-6 col-12 ">
+            <ShowQuoteComponent key={quote?.quote.id} quote={quote} />
+          </div>
+        </>
+      )
+    })
 
   useEffect(() => {
     const fetchRandomQuote = async () => {
@@ -41,9 +49,7 @@ const Home: FC = () => {
     if (mostLikedQuotesData && mostLikedQuotesData.data.length > 0) {
       return (
         <>
-          <div className="d-flex flex-column flex-wrap gap-3">
-            {quotesComponent(mostLikedQuotesData.data)}
-          </div>{' '}
+          <div className="row">{quotesComponent(mostLikedQuotesData.data)}</div>{' '}
         </>
       )
     } else {
@@ -60,7 +66,7 @@ const Home: FC = () => {
     if (mostRecentQuotesData && mostRecentQuotesData.data.length > 0) {
       return (
         <>
-          <div className="d-flex flex-column flex-wrap gap-3">
+          <div className="row">
             {quotesComponent(mostRecentQuotesData.data)}
           </div>{' '}
         </>
@@ -78,7 +84,7 @@ const Home: FC = () => {
     <>
       <Layout>
         {authStore.user ? (
-          <div className="home-page-container d-flex flex-column border border-primary">
+          <div className="home-page-container d-flex flex-column">
             <div className="d-flex justify-content-center mx-5 pl-40">
               <div className="d-flex flex-column ">
                 <h1 className="line-space-0 text-orange text-center">
@@ -106,7 +112,7 @@ const Home: FC = () => {
                 </p>
               </div>
             </div>
-            <div className="d-flex h-500">{showLikedQuoteComponent()}</div>
+            <div className="d-flex">{showLikedQuoteComponent()}</div>
             <div className="d-flex justify-content-center align-items-center">
               <button
                 onClick={() =>
@@ -129,7 +135,7 @@ const Home: FC = () => {
                 </p>
               </div>
             </div>
-            <div className="d-flex h-500">{showRecentQuoteComponent()}</div>
+            <div className="d-flex">{showRecentQuoteComponent()}</div>
             <div className="d-flex justify-content-center align-items-center">
               <button
                 onClick={() =>

@@ -9,7 +9,7 @@ import { AiOutlineSetting } from 'react-icons/ai'
 import { MdClose } from 'react-icons/md'
 import Avatar from 'react-avatar'
 import authStore from 'stores/auth.store'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { routes } from 'constants/routesConstants'
 import { CheckVoteType } from 'models/vote'
 import CreateQuoteForm from './CreateQuoteForm'
@@ -21,52 +21,66 @@ interface Props {
 }
 
 const ShowQuoteComponent: FC<Props> = ({ quote }) => {
-  // const { data: quoteData } = useQuery<{ data: QuoteNumberType } | undefined>(
-  //   [quote?.id],
-  //   () => API.fetchQuote(quote?.id || ''),
-  // )
-  const [didClick, setDidClick] = useState(false)
-  const { data: checkVoteData } = useQuery<{ data: CheckVoteType } | undefined>(
-    ['checkVote', didClick],
-    () => API.checkVote(quote.quote.id || ''),
-  )
+  const [quoteVotes, setQuoteVotes] = useState(quote.votes || 0)
+  const location = useLocation()
+  const isHomePage = location.pathname === routes.HOME
+  const [voteType, setVoteType] = useState<string | null>(null)
+  const [isAuthor, setIsAuthor] = useState(false)
 
-  // console.log(checkVoteData?.data)
-
-  const [votedDown, setVotedDown] = useState(false)
-  const [votedUp, setVotedUp] = useState(false)
-
-  // useEffect(() => {
-  //   console.log(checkVoteData?.data.didVote)
-  //   if (checkVoteData?.data.didVote) {
-
-  //     setVotedUp(checkVoteData.data.upDown === true)
-  //     setVotedDown(checkVoteData.data.upDown === true)
-  //   }
-  // }, [checkVoteData])
-
-  const handleVote = async (upDown: boolean) => {
-    setDidClick(!didClick)
-    if (upDown) {
-      if (!checkVoteData?.data.upDown) {
-        await API.postUpVote(quote.quote.id)
-        setVotedUp(true)
-        setVotedDown(false)
-      } else if (checkVoteData.data.upDown) {
-        // await API.removeVote(quote.quote.id) TODO
-        setVotedUp(false)
-        setVotedDown(false)
+  useEffect(() => {
+    const checkVote = async () => {
+      if (!quote.quote.id) return
+      try {
+        const { didVote, upDown, isAuthor } = (
+          await API.checkVote(quote.quote.id)
+        ).data
+        setIsAuthor(isAuthor)
+        if (isAuthor) return
+        if (didVote === false) {
+          setVoteType(null)
+          return
+        }
+        if (upDown === true) setVoteType('upvote')
+        if (upDown === false) setVoteType('downvote')
+      } catch (e) {
+        console.error(e)
       }
-    } else {
-      if (checkVoteData?.data.upDown) {
-        await API.postDownVote(quote.quote.id)
-        setVotedUp(false)
-        setVotedDown(true)
-      } else if (!checkVoteData?.data.upDown) {
-        // await API.removeVote(quote.quote.id) TODO
-        setVotedUp(false)
-        setVotedDown(false)
+    }
+    checkVote()
+  }, [quote.quote.id])
+
+  const handleVote = async (vote: boolean) => {
+    if (isAuthor) return
+    const api_request =
+      vote === true
+        ? API.postUpVote(quote.quote.id)
+        : API.postDownVote(quote.quote.id)
+
+    try {
+      const res = (await api_request).data
+      if (voteType === 'upvote' && vote === true) {
+        setQuoteVotes(quoteVotes - 1)
+        setVoteType(null)
+        return
       }
+      if (voteType === 'downvote' && vote === false) {
+        setVoteType(null)
+        setQuoteVotes(quoteVotes + 1)
+        return
+      }
+      if (vote === true) {
+        const change = voteType === 'downvote' ? quoteVotes + 2 : quoteVotes + 1
+        setVoteType('upvote')
+        setQuoteVotes(change)
+        return
+      }
+      if (vote === false) {
+        const change = voteType === 'upvote' ? quoteVotes - 2 : quoteVotes - 1
+        setQuoteVotes(change)
+        setVoteType('downvote')
+      }
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -83,13 +97,16 @@ const ShowQuoteComponent: FC<Props> = ({ quote }) => {
     >
       <div className="d-flex flex-column">
         <div onClick={() => handleVote(true)}>
-          <RiArrowUpSLine size={24} color={votedUp ? 'orange' : 'black'} />
+          <RiArrowUpSLine
+            size={24}
+            color={voteType === 'upvote' ? 'orange' : 'black'}
+          />
         </div>
-        <div className="d-flex justify-content-center ">{quote.votes}</div>
+        <div className="d-flex justify-content-center ">{quoteVotes}</div>
         <div>
           <RiArrowDownSLine
             size={24}
-            color={votedDown ? 'orange' : 'black'}
+            color={voteType === 'downvote' ? 'orange' : 'black'}
             onClick={() => handleVote(false)}
           />
         </div>
@@ -121,7 +138,7 @@ const ShowQuoteComponent: FC<Props> = ({ quote }) => {
           </div>
         </Link>
       </div>
-      {authStore.user?.id == quote.quote.author.id && (
+      {authStore.user?.id == quote.quote.author.id && !isHomePage && (
         <div className="d-flex flex-column ">
           <UpdateQuoteForm quote_id={quote.quote.id} text={quote.quote.text} />
           <DeleteQuoteForm quote_id={quote.quote.id} />

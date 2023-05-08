@@ -1,7 +1,7 @@
 import ShowQuoteComponent from 'components/quotes/ShowQuoteComponent'
 import DashboardLayout from 'components/ui/DashboardLayout'
 import Layout from 'components/ui/Layout'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Avatar from 'react-avatar'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
@@ -18,39 +18,55 @@ const Profile: FC = () => {
   const [pageNumber, setPageNumber] = useState(1)
 
   const { data: userData } = useQuery<{ data: UserType } | undefined>(
-    ['user'],
+    ['user', userId],
     () => API.fetchUser(userId || ''),
+    { enabled: !!userId },
   )
   const { data: quoteNumber } = useQuery<{ data: number } | undefined>(
-    ['quoteNumber'],
+    ['quoteNumber', userId],
     () => API.fetchQuotesNumber(userId || ''),
+    { enabled: !!userId },
   )
   const { data: votesNumber } = useQuery<{ data: number } | undefined>(
-    ['voteNumber'],
+    ['voteNumber', userId],
     () => API.fetchVotesNumber(userId || ''),
+    { enabled: !!userId },
   )
 
   const { data: mostLikedQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
-  >(['mostLikedQuotes'], () =>
-    API.getMostLikedQuotesByUser(userId || '', pageNumber),
+  >(
+    ['mostLikedQuotes', userId, pageNumber],
+    () => API.getMostLikedQuotesByUser(userId || '', pageNumber),
+    { enabled: !!userId },
   )
 
   const { data: recentQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
-  >(['mostRecentQuotes'], () =>
-    API.getRecentQuotesByUser(userId || '', pageNumber),
+  >(
+    ['mostRecentQuotes', userId, pageNumber],
+    () => API.getRecentQuotesByUser(userId || '', pageNumber),
+    { enabled: !!userId },
   )
 
   const { data: likedQuotesData } = useQuery<
     { data: QuoteNumberType[] } | undefined
-  >(['likedQuotes'], () => API.getLikedQuotesByUser(userId || '', pageNumber))
+  >(
+    ['likedQuotes', userId, pageNumber],
+    () => API.getLikedQuotesByUser(userId || '', pageNumber),
+    {
+      enabled: !!userId,
+    },
+  )
 
   const quotesComponent = (data: QuoteNumberType[]) =>
     data?.map((quote) => (
-      <div key={quote.quote.id}>
-        <ShowQuoteComponent key={quote?.quote.id} quote={quote} />
-      </div>
+      <>
+        <div key={quote.quote.id} className="col">
+          <ShowQuoteComponent key={quote?.quote.id} quote={quote} />
+        </div>
+        <div className="w-100"></div>
+      </>
     )) || []
 
   const showQuoteComponent = (number: number) => {
@@ -59,7 +75,11 @@ const Profile: FC = () => {
     switch (number) {
       case 1:
         if (mostLikedQuotesData && mostLikedQuotesData.data.length > 0) {
-          return <div>{quotesComponent(mostLikedQuotesData.data)}</div>
+          return (
+            <div className="row">
+              {quotesComponent(mostLikedQuotesData.data)}
+            </div>
+          )
         } else {
           return (
             <div>
@@ -70,7 +90,9 @@ const Profile: FC = () => {
       case 2:
         // console.log(recentQuotesData || 'prazno sve')
         if (recentQuotesData && recentQuotesData.data.length > 0) {
-          return <div>{quotesComponent(recentQuotesData.data)}</div>
+          return (
+            <div className="row">{quotesComponent(recentQuotesData.data)}</div>
+          )
         } else {
           return (
             <div>
@@ -81,7 +103,9 @@ const Profile: FC = () => {
 
       case 3:
         if (likedQuotesData && likedQuotesData.data.length > 0) {
-          return <div>{quotesComponent(likedQuotesData.data)}</div>
+          return (
+            <div className="row">{quotesComponent(likedQuotesData.data)}</div>
+          )
         } else {
           return (
             <div>
@@ -94,7 +118,8 @@ const Profile: FC = () => {
 
   return (
     <Layout>
-      <div className="d-flex justify-content-center rectangle flex-column">
+      <div className="d-flex justify-content-center rectangle flex-column"></div>
+      <div className="d-flex justify-content-center flex-column profile">
         <div className="align-self-center mb-3 mg-top-100">
           <Avatar
             className="signup-avatar"
@@ -129,18 +154,18 @@ const Profile: FC = () => {
       </div>
 
       <div className="d-flex flex-column quote-component-pozition">
-        <div className="d-flex mx-3 gap-3">
-          <div className="mb-1">
+        <div className="d-flex mx-3 gap-3 mb-1">
+          <div className="w-100">
             <p className="text-orange font-size-24 text-align-center px-3">
               Most liked quotes
             </p>
             {showQuoteComponent(1)}
           </div>
-          <div>
+          <div className="w-100">
             <p className="font-size-24 text-align-center px-3">Most recent</p>
             {showQuoteComponent(2)}
           </div>
-          <div className="">
+          <div className="w-100">
             <p className="font-size-24 text-align-center px-3">Liked</p>
             {showQuoteComponent(3)}
           </div>

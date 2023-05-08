@@ -3,9 +3,7 @@ import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { Form, FormLabel } from 'react-bootstrap'
 import ToastContainer from 'react-bootstrap/ToastContainer'
 import Toast from 'react-bootstrap/Toast'
-import Button from 'react-bootstrap/Button'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 import Popup from 'reactjs-popup'
 import * as API from 'api/Api'
 import authStore from 'stores/auth.store'
@@ -22,6 +20,7 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
     handleSubmit,
     formState: { errors },
     register,
+    setError,
   } = useForm<UpdateUserFields>({
     defaultValues: {
       first_name: authStore.user ? authStore.user.first_name : '',
@@ -50,6 +49,13 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
   }
 
   const onSubmit = async (data: UpdateUserFields) => {
+    if (data.password != data.confirm_password) {
+      setError('confirm_password', {
+        type: 'custom',
+        message: 'Passwords do not match',
+      })
+      return
+    }
     const response = await API.updateUser(data)
 
     if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
@@ -291,12 +297,13 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
                 aria-label="Confirm_password"
                 aria-describedby="confirm_password"
                 className=" w-100 form-section-orange signup-text-xsmall"
-                // {...register('confirm_password', {
-                //     validate: (value: string, formValues: UpdateUserFields) =>
-                //     value === formValues.password || 'Passwords do not match!',
-                //     required: true,
-                //   })}
+                {...register('confirm_password', {
+                  required: true,
+                })}
               />
+              {errors.confirm_password && (
+                <p>{errors.confirm_password.message}</p>
+              )}
             </Form.Group>
 
             <div className="d-flex mt-4 gap-3">

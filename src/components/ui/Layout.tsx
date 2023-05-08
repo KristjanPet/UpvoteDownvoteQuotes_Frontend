@@ -9,9 +9,14 @@ interface Props {
 const Layout: FC<Props> = ({ children }) => {
   return (
     <>
-      <Navbar />
-      <div className="layout-container container-xxl p-4">{children}</div>
-      <Footer />
+      <div
+        className="d-flex flex-column "
+        style={{ minHeight: '100vh', height: 'auto' }}
+      >
+        <Navbar />
+        <div className="container-xxl p-4">{children}</div>
+        <Footer />
+      </div>
     </>
   )
 }
