@@ -14,31 +14,34 @@ export const fetchRandomQuote = async () =>
     apiRoutes.FETCH_QUOTE + '/random/get',
   )
 
-export const getAllMostLikedQuotes = async () =>
-  apiRequest<undefined, QuoteNumberType[]>('get', apiRoutes.FETCH_QUOTE)
-
-export const getAllRecentQuotes = async () =>
+export const getAllMostLikedQuotes = async (page: number) =>
   apiRequest<undefined, QuoteNumberType[]>(
     'get',
-    apiRoutes.FETCH_QUOTE + '/recent/get',
+    `${apiRoutes.FETCH_QUOTE}/?page=${page}`,
   )
 
-export const getMostLikedQuotesByUser = async (id: string) =>
+export const getAllRecentQuotes = async (page: number) =>
   apiRequest<undefined, QuoteNumberType[]>(
     'get',
-    apiRoutes.FETCH_QUOTE + '/' + id + '/mostliked',
+    `${apiRoutes.FETCH_QUOTE}/recent/get?page=${page}`,
   )
 
-export const getRecentQuotesByUser = async (id: string) =>
+export const getMostLikedQuotesByUser = async (id: string, page: number) =>
   apiRequest<undefined, QuoteNumberType[]>(
     'get',
-    apiRoutes.FETCH_QUOTE + '/' + id + '/recent',
+    `${apiRoutes.FETCH_QUOTE}/${id}/mostliked?page=${page}`,
   )
 
-export const getLikedQuotesByUser = async (id: string) =>
+export const getRecentQuotesByUser = async (id: string, page: number) =>
   apiRequest<undefined, QuoteNumberType[]>(
     'get',
-    apiRoutes.FETCH_QUOTE + '/' + id + '/liked',
+    `${apiRoutes.FETCH_QUOTE}/${id}/recent?page=${page}`,
+  )
+
+export const getLikedQuotesByUser = async (id: string, page: number) =>
+  apiRequest<undefined, QuoteNumberType[]>(
+    'get',
+    `${apiRoutes.FETCH_QUOTE}/${id}/liked?page=${page}`,
   )
 
 export const postUpVote = async (id: string) =>
