@@ -126,7 +126,7 @@ const LoginForm: FC = () => {
     <>
       <Form className="register-form" onSubmit={onSubmit}>
         <div className="d-flex flex-column justify-content-center align-items-center">
-          <p className="signup-text-black m-0">
+          <p className="text-center signup-text-black m-0">
             What is your <span className="text-orange">name?</span>{' '}
           </p>
           <p className="signup-text-small">

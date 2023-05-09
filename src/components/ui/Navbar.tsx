@@ -10,8 +10,12 @@ import * as API from 'api/Api'
 import Avatar from 'react-avatar'
 import SettingsForm from 'components/user/SettingsForm'
 import CreateQuoteForm from 'components/quotes/CreateQuoteForm'
+import useMediaQuery from 'hooks/useMediaQuery'
+import { AiOutlineMenu } from 'react-icons/ai'
+import MobileMenuForm from '../user/MobileMenuForm'
 
 const Navbar: FC = () => {
+  const { isMobile } = useMediaQuery(536)
   const navigate = useNavigate()
   const [apiError, setApiError] = useState('')
   const [showError, setShowError] = useState(false)
@@ -42,11 +46,11 @@ const Navbar: FC = () => {
       location.pathname === routes.SIGNUP ||
       location.pathname === routes.LOGIN
     ) {
-      setNavbarClass('text-orange text-decoration-none')
+      setNavbarClass('text-orange')
       setLogoPath('/images/logoHorizontal2Orange.svg')
       setOpacity('opacity-100')
     } else {
-      setNavbarClass('text-white text-decoration-none')
+      setNavbarClass('text-white')
       setLogoPath('/images/logoHorizontal2White.svg')
       setOpacity('opacity-25')
     }
@@ -59,123 +63,119 @@ const Navbar: FC = () => {
           className="navbar m-4 mx-auto navbar-light d-flex justify-content-between align-items-center w-auto"
           style={{ maxWidth: '1300px' }}
         >
-          <Link
-            className="navbar-brand d-flex justify-content-center px-2 text-decoration-none"
-            to={routes.HOME}
-          >
-            <img src={logoPath} alt="Quotastic" width={130} height={25} />
-          </Link>
-          {/* <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarTogglerDemo02"
-            aria-controls="navbarTogglerDemo02"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button> */}
+          {isMobile ? (
+            <>
+              <MobileMenuForm />
 
-          <div
-            className=" d-flex justify-content-end "
-            id="navbarTogglerDemo02"
-          >
-            <ul className="navbar-nav d-flex flex-row align-items-center gap-4 ">
-              {authStore.user ? (
-                <>
-                  <li className="nav-item">
-                    <NavLink to={routes.HOME} className={navbarClass}>
-                      Home
-                    </NavLink>
-                  </li>
-                  <li className="nav-item ">
-                    <SettingsForm navbarClass={navbarClass} />
-                  </li>
-                  <li className="nav-item ">
-                    <button
-                      onClick={signout}
-                      // className="navbar-text logout-button"
-                      className={`${navbarClass} logout-button`}
-                    >
-                      Logout
-                    </button>
-                  </li>
-                  <li className="nav-item ">
-                    <Link
-                      className={`${opacity} text-decoration-none text-light`}
-                      // to={`${routes.PROFILE}/users/edit`}
-                      to={`${routes.PROFILE}/${authStore.user.id}`}
-                      state={{
-                        id: authStore.user?.id,
-                        first_name: authStore.user?.first_name,
-                        last_name: authStore.user?.last_name,
-                        email: authStore.user?.email,
-                        avatar: authStore.user?.avatar,
-                        isActiveUser: true,
-                      }}
-                    >
-                      <Avatar
-                        className="navbar-avatar"
-                        round
-                        src={
-                          authStore.user?.avatar
-                            ? `${process.env.REACT_APP_API_URL}/files/${authStore.user?.avatar}`
-                            : '/images/blankAvatarIcon.svg'
-                        }
-                        alt={
-                          authStore.user?.first_name ||
-                          authStore.user?.last_name
-                            ? `${authStore.user?.first_name} ${authStore.user?.last_name}`
-                            : authStore.user?.email
-                        }
-                      />
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    {/* <Link
-                      className={`${opacity} navbar-brand navbar-add d-flex justify-content-center align-items-center bg-white rounded-circle`}
-                      to={routes.HOME}
-                    >
-                      <img
-                        src="/images/addIcon.svg"
-                        // className='bg-light'
-                        alt="Add"
-                        width={15}
-                        height={15}
-                      />
-                    </Link> */}
-                    <CreateQuoteForm opacity={opacity} />
-                  </li>
-                </>
-              ) : (
-                <>
-                  {!isSignupPage && (
-                    <li className="nav-item ">
-                      <NavLink
-                        to={routes.SIGNUP}
-                        className={'text-decoration-none'}
-                      >
-                        <button className="signup-button-litlle">
-                          Sign up
+              <Link
+                className="navbar-brand d-flex justify-content-center px-2 text-decoration-none"
+                to={routes.HOME}
+              >
+                <img src={logoPath} alt="Quotastic" width={130} height={25} />
+              </Link>
+
+              {authStore.user && <CreateQuoteForm opacity={'opacity-100'} />}
+            </>
+          ) : (
+            <>
+              <Link
+                className="navbar-brand d-flex justify-content-center px-2 text-decoration-none"
+                to={routes.HOME}
+              >
+                <img src={logoPath} alt="Quotastic" width={130} height={25} />
+              </Link>
+
+              <div
+                className=" d-flex justify-content-end "
+                id="navbarTogglerDemo02"
+              >
+                <ul className="navbar-nav d-flex flex-row align-items-center gap-4 ">
+                  {authStore.user ? (
+                    <>
+                      <li className="nav-item">
+                        <NavLink to={routes.HOME} className={navbarClass}>
+                          Home
+                        </NavLink>
+                      </li>
+                      <li className="nav-item ">
+                        <SettingsForm navbarClass={navbarClass} />
+                      </li>
+                      <li className="nav-item ">
+                        <button
+                          onClick={signout}
+                          // className="navbar-text logout-button"
+                          className={`${navbarClass} logout-button`}
+                        >
+                          Logout
                         </button>
-                      </NavLink>
-                    </li>
+                      </li>
+                      <li className="nav-item ">
+                        <Link
+                          className={`${opacity} text-decoration-none text-light`}
+                          // to={`${routes.PROFILE}/users/edit`}
+                          to={`${routes.PROFILE}/${authStore.user.id}`}
+                          state={{
+                            id: authStore.user?.id,
+                            first_name: authStore.user?.first_name,
+                            last_name: authStore.user?.last_name,
+                            email: authStore.user?.email,
+                            avatar: authStore.user?.avatar,
+                            isActiveUser: true,
+                          }}
+                        >
+                          <Avatar
+                            className="navbar-avatar"
+                            round
+                            src={
+                              authStore.user?.avatar
+                                ? `${process.env.REACT_APP_API_URL}/files/${authStore.user?.avatar}`
+                                : '/images/blankAvatarIcon.svg'
+                            }
+                            alt={
+                              authStore.user?.first_name ||
+                              authStore.user?.last_name
+                                ? `${authStore.user?.first_name} ${authStore.user?.last_name}`
+                                : authStore.user?.email
+                            }
+                          />
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <CreateQuoteForm opacity={opacity} />
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      {!isSignupPage && (
+                        <li className="nav-item ">
+                          <NavLink
+                            to={routes.SIGNUP}
+                            className={'text-decoration-none'}
+                          >
+                            <button className="signup-button-litlle">
+                              Sign up
+                            </button>
+                          </NavLink>
+                        </li>
+                      )}
+                      {!isLoginPage && (
+                        <li className="nav-item ">
+                          <NavLink
+                            to={routes.LOGIN}
+                            className={'text-decoration-none'}
+                          >
+                            <button className="login-button-litlle">
+                              Login
+                            </button>
+                          </NavLink>
+                        </li>
+                      )}
+                    </>
                   )}
-                  {!isLoginPage && (
-                    <li className="nav-item ">
-                      <NavLink
-                        to={routes.LOGIN}
-                        className={'text-decoration-none'}
-                      >
-                        <button className="login-button-litlle">Login</button>
-                      </NavLink>
-                    </li>
-                  )}
-                </>
-              )}
-            </ul>
-          </div>
+                </ul>
+              </div>
+            </>
+          )}
         </nav>
       </header>
       {showError && (

@@ -96,7 +96,7 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
   return (
     <>
       <button
-        className={`${navbarClass} logout-button`}
+        className={`${navbarClass} text-decoration-none logout-button`}
         onClick={() => setWindowOpen(true)}
       >
         {' '}
