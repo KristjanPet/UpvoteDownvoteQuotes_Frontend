@@ -7,8 +7,10 @@ import * as API from 'api/Api'
 import ShowQuoteComponent from 'components/quotes/ShowQuoteComponent'
 import { useQuery } from 'react-query'
 import authStore from 'stores/auth.store'
+import useMediaQuery from 'hooks/useMediaQuery'
 
 const Home: FC = () => {
+  const { isMobile } = useMediaQuery(769)
   const [randomQuote, setRandomQuote] = useState<QuoteNumberType>()
   const [pageNumberLikedQuotes, setPageNumberLikedQuotes] = useState(1)
   const [pageNumberRecentQuotes, setPageNumberRecentQuotes] = useState(1)
@@ -85,7 +87,7 @@ const Home: FC = () => {
       <Layout>
         {authStore.user ? (
           <div className="home-page-container d-flex flex-column">
-            <div className="d-flex justify-content-center mx-5 pl-40">
+            <div className="d-flex justify-content-center">
               <div className="d-flex flex-column ">
                 <h1 className="line-space-0 text-orange text-center">
                   Quote of the day
@@ -101,7 +103,7 @@ const Home: FC = () => {
                 )}
               </div>
             </div>
-            <div className="d-flex justify-content-center align-items-center mb-3 mg-top-150 pl-40">
+            <div className="d-flex justify-content-center align-items-center mb-3 mg-top-150">
               <div className="d-flex flex-column w-50">
                 <p className="font-size-35 text-center line-space-0 text-orange">
                   Most upvoted quotes
@@ -123,7 +125,7 @@ const Home: FC = () => {
                 Load more
               </button>
             </div>
-            <div className="d-flex justify-content-center align-items-center mb-3 mg-top-150 pl-40">
+            <div className="d-flex justify-content-center align-items-center mb-3 mg-top-150">
               <div className="d-flex flex-column w-50">
                 <p className="font-size-35 text-center line-space-0 text-orange">
                   Most recent quotes
@@ -149,8 +151,8 @@ const Home: FC = () => {
           </div>
         ) : (
           <div className="home-page-container d-flex flex-column">
-            <div className="d-flex justify-content-between mx-5 pl-40">
-              <div className="d-flex flex-column w-50">
+            <div className="row justify-content-around mb-5">
+              <div className="col-md-auto mb-5">
                 <h1 className="font-size-98 line-space-0">
                   Welcome <br /> to{' '}
                   <span className="text-orange">Quotastic</span>{' '}
@@ -166,7 +168,7 @@ const Home: FC = () => {
                   <button className="signup-button-litlle">Sign up</button>
                 </NavLink>
               </div>
-              <div className="d-flex flex-column">
+              <div className="col-md-auto">
                 <img
                   src="/images/homePageQuote.svg"
                   // className='bg-light'
@@ -174,7 +176,7 @@ const Home: FC = () => {
                 />
               </div>
             </div>
-            <div className="d-flex justify-content-center align-items-center mg-top-150 pl-40">
+            <div className="row justify-content-around mt-5">
               <p className="font-size-61 text-center line-space-0">
                 Explore the world of <br />{' '}
                 <span className="text-orange">fantastic quotes</span>{' '}
@@ -191,7 +193,7 @@ const Home: FC = () => {
                 </p>
               </div>
             </div>
-            <div className="d-flex h-500">{showLikedQuoteComponent()}</div>
+            <div className="d-flex">{showLikedQuoteComponent()}</div>
             <div className="d-flex justify-content-center align-items-center">
               <NavLink
                 to={routes.SIGNUP}

@@ -5,7 +5,7 @@ const Footer: FC = () => {
     <footer className="footer w-100 ">
       <div className="d-flex align-items-center h-100 justify-content-between container-xxl">
         <img src="images/footerLogo.svg" alt="FooterLogo" />
-        <p className="text-white mt-3">
+        <p className="text-white mt-3 font-size-12">
           All Rights Reserved | skillupmentor.com
         </p>
       </div>

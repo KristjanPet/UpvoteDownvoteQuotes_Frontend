@@ -15,7 +15,7 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import MobileMenuForm from '../user/MobileMenuForm'
 
 const Navbar: FC = () => {
-  const { isMobile } = useMediaQuery(536)
+  const { isMobile } = useMediaQuery(769)
   const navigate = useNavigate()
   const [apiError, setApiError] = useState('')
   const [showError, setShowError] = useState(false)
@@ -68,10 +68,15 @@ const Navbar: FC = () => {
               <MobileMenuForm />
 
               <Link
-                className="navbar-brand d-flex justify-content-center px-2 text-decoration-none"
+                className="text-decoration-none navbar-brand d-flex justify-content-center px-2 "
                 to={routes.HOME}
               >
-                <img src={logoPath} alt="Quotastic" width={130} height={25} />
+                <img
+                  src="/images/logoHorizontal2Orange.svg"
+                  alt="Quotastic"
+                  width={130}
+                  height={25}
+                />
               </Link>
 
               {authStore.user && <CreateQuoteForm opacity={'opacity-100'} />}
@@ -79,7 +84,7 @@ const Navbar: FC = () => {
           ) : (
             <>
               <Link
-                className="navbar-brand d-flex justify-content-center px-2 text-decoration-none"
+                className="text-decoration-none navbar-brand d-flex justify-content-center px-2 "
                 to={routes.HOME}
               >
                 <img src={logoPath} alt="Quotastic" width={130} height={25} />

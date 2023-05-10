@@ -167,9 +167,9 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
             </div>
 
             <div className="row mb-2">
-              <div className="col">
+              <div className="col-12 col-md-6 order-last order-md-first">
                 <button
-                  className="w-100 button-light-orange signup-button-litlle mb-2"
+                  className="w-100 button-light-orange signup-button-litlle mb-2 "
                   type="button"
                   onClick={() => {
                     setPasswordOpen(true)
@@ -180,9 +180,10 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
                   Change password{' '}
                 </button>
               </div>
-              <div className="col">
+              {/* <div className="w-md-100"></div> */}
+              <div className="col-12 col-md-6">
                 <button
-                  className="w-100 signup-button-litlle mb-2"
+                  className="w-100 signup-button-litlle mb-3"
                   type="button"
                   onClick={() => {
                     setAvatarOpen(true)
@@ -195,7 +196,7 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
               </div>
             </div>
 
-            <div className="d-flex mb-2 gap-3">
+            <div className="d-flex justify-content-md-start justify-content-between mb-2 gap-3">
               <div className="">
                 <button className=" signup-button-litlle" type="submit">
                   {' '}
@@ -306,7 +307,7 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
               )}
             </Form.Group>
 
-            <div className="d-flex mt-4 gap-3">
+            <div className="d-flex justify-content-md-start justify-content-between mt-4 gap-3">
               <div className="">
                 <button className=" signup-button-litlle" type="submit">
                   {' '}
@@ -391,7 +392,7 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
               </button>
             </div>
 
-            <div className="d-flex mt-4 gap-3">
+            <div className="d-flex justify-content-md-start justify-content-between mt-4 gap-3">
               <div className="">
                 <button className=" signup-button-litlle" type="submit">
                   {' '}

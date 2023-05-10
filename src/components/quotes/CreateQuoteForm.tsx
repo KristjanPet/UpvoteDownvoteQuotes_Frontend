@@ -68,7 +68,7 @@ const CreateQuoteForm: FC<props> = ({ opacity }) => {
         <div className="settings-box">
           <form onSubmit={handleSubmit(onSubmit)} className="w-100">
             <div className="d-flex flex-column">
-              <p className="signup-text-black m-0">
+              <p className="font-size-35 m-0">
                 Are you felling <span className="text-orange">inspired?</span>{' '}
               </p>
               <p className=" p-0">

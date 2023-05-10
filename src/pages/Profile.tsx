@@ -154,18 +154,18 @@ const Profile: FC = () => {
       </div>
 
       <div className="d-flex flex-column quote-component-pozition">
-        <div className="d-flex mx-3 gap-3 mb-1">
-          <div className="w-100">
+        <div className="row">
+          <div className="col-md-4 col-12">
             <p className="text-orange font-size-24 text-align-center px-3">
               Most liked quotes
             </p>
             {showQuoteComponent(1)}
           </div>
-          <div className="w-100">
+          <div className="col-md-4 col-12">
             <p className="font-size-24 text-align-center px-3">Most recent</p>
             {showQuoteComponent(2)}
           </div>
-          <div className="w-100">
+          <div className="col-md-4 col-12">
             <p className="font-size-24 text-align-center px-3">Liked</p>
             {showQuoteComponent(3)}
           </div>
