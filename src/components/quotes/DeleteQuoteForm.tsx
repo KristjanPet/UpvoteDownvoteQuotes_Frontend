@@ -1,13 +1,10 @@
 import { StatusCode } from 'constants/errorConstants'
 import { FC, useState } from 'react'
-import { Form } from 'react-bootstrap'
 import ToastContainer from 'react-bootstrap/ToastContainer'
 import Toast from 'react-bootstrap/Toast'
 import { useForm } from 'react-hook-form'
 import Popup from 'reactjs-popup'
 import * as API from 'api/Api'
-import { createQuoteField } from 'models/quote'
-import { AiOutlineSetting } from 'react-icons/ai'
 import { MdClose } from 'react-icons/md'
 
 type props = {
@@ -15,11 +12,7 @@ type props = {
 }
 
 const DeleteQuoteForm: FC<props> = ({ quote_id }) => {
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-  } = useForm()
+  const { handleSubmit } = useForm()
 
   const [apiError, setApiError] = useState('')
   const [showError, setShowError] = useState(false)

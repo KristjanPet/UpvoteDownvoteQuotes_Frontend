@@ -1,6 +1,5 @@
 import { UserType } from 'models/auth'
 import { useEffect } from 'react'
-import { useQuery } from 'react-query'
 import { useLocation, useNavigate } from 'react-router-dom'
 import * as API from 'api/Api'
 import { routes } from 'constants/routesConstants'

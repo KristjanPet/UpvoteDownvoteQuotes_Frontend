@@ -10,6 +10,8 @@ import Popup from 'reactjs-popup'
 import authStore from 'stores/auth.store'
 import * as API from 'api/Api'
 import SettingsForm from './SettingsForm'
+import ToastContainer from 'react-bootstrap/ToastContainer'
+import Toast from 'react-bootstrap/Toast'
 
 const MobileMenuForm: FC = () => {
   const navigate = useNavigate()
@@ -147,6 +149,18 @@ const MobileMenuForm: FC = () => {
           )}
         </div>
       </Popup>
+      {showError && (
+        <ToastContainer className="p-3" position="top-end">
+          <Toast onClose={() => setShowError(false)} show={showError}>
+            <Toast.Header>
+              <strong className="me-suto text-danger">Error</strong>
+            </Toast.Header>
+            <Toast.Body className="text-danger" bg-light>
+              {apiError}
+            </Toast.Body>
+          </Toast>
+        </ToastContainer>
+      )}
     </>
   )
 }

@@ -15,11 +15,7 @@ type props = {
 }
 
 const UpdateQuoteForm: FC<props> = ({ quote_id, text }) => {
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-  } = useForm<createQuoteField>({
+  const { handleSubmit, register } = useForm<createQuoteField>({
     defaultValues: {
       text: text,
     },

@@ -1,18 +1,12 @@
 import { observer } from 'mobx-react'
 import { QuoteNumberType } from 'models/auth'
-import React, { FC, useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import { FC, useEffect, useState } from 'react'
 import * as API from 'api/Api'
-import { QuoteType } from 'models/quote'
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri'
-import { AiOutlineSetting } from 'react-icons/ai'
-import { MdClose } from 'react-icons/md'
 import Avatar from 'react-avatar'
 import authStore from 'stores/auth.store'
 import { Link, useLocation } from 'react-router-dom'
 import { routes } from 'constants/routesConstants'
-import { CheckVoteType } from 'models/vote'
-import CreateQuoteForm from './CreateQuoteForm'
 import UpdateQuoteForm from './UpdateQuoteForm'
 import DeleteQuoteForm from './DeleteQuoteForm'
 
@@ -138,7 +132,7 @@ const ShowQuoteComponent: FC<Props> = ({ quote }) => {
           </div>
         </Link>
       </div>
-      {authStore.user?.id == quote.quote.author.id && !isHomePage && (
+      {authStore.user?.id === quote.quote.author.id && !isHomePage && (
         <div className="d-flex flex-column ">
           <UpdateQuoteForm quote_id={quote.quote.id} text={quote.quote.text} />
           <DeleteQuoteForm quote_id={quote.quote.id} />
