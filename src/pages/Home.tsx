@@ -30,7 +30,7 @@ const Home: FC = () => {
     data?.map((quote, index) => {
       return (
         <>
-          <div key={quote.quote.id} className="col-xl-4 col-md-6 col-12 ">
+          <div key={index} className="col-xl-4 col-md-6 col-12 ">
             <ShowQuoteComponent key={quote?.quote.id} quote={quote} />
           </div>
         </>

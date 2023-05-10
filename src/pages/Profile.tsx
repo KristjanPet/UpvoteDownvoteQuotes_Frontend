@@ -60,13 +60,13 @@ const Profile: FC = () => {
   )
 
   const quotesComponent = (data: QuoteNumberType[]) =>
-    data?.map((quote) => (
-      <>
-        <div key={quote.quote.id} className="col">
+    data?.map((quote, index) => (
+      <div key={index}>
+        <div className="col">
           <ShowQuoteComponent key={quote?.quote.id} quote={quote} />
         </div>
         <div className="w-100"></div>
-      </>
+      </div>
     )) || []
 
   const showQuoteComponent = (number: number) => {

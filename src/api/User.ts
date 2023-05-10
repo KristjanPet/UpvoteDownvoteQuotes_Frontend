@@ -2,7 +2,7 @@ import { apiRoutes } from 'constants/apiConstants'
 import { apiRequest } from './Api'
 import { LoginUserFields } from 'hooks/react-hook-form/useLogin'
 import { RegisterUserFields } from 'hooks/react-hook-form/useRegister'
-import { UpdateUserFields, UserType } from 'models/auth'
+import { UpdatePasswordFields, UpdateUserFields, UserType } from 'models/auth'
 import { QuoteType, createQuoteField } from 'models/quote'
 
 export const fetchMe = async () =>
@@ -30,6 +30,13 @@ export const updateUser = async (data: UpdateUserFields) =>
   apiRequest<UpdateUserFields, void>(
     'patch',
     `${apiRoutes.FETCH_USER}/update-user`,
+    data,
+  )
+
+export const updatePassword = async (data: UpdatePasswordFields) =>
+  apiRequest<UpdatePasswordFields, void>(
+    'patch',
+    `${apiRoutes.FETCH_USER}/update-password`,
     data,
   )
 

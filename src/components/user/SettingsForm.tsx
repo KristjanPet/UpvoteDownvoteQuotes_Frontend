@@ -8,7 +8,7 @@ import Popup from 'reactjs-popup'
 import * as API from 'api/Api'
 import authStore from 'stores/auth.store'
 import { observer } from 'mobx-react'
-import { UpdateUserFields, UserType } from 'models/auth'
+import { UpdatePasswordFields, UpdateUserFields, UserType } from 'models/auth'
 import Avatar from 'react-avatar'
 
 type props = {
@@ -26,6 +26,17 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
       first_name: authStore.user ? authStore.user.first_name : '',
       last_name: authStore.user ? authStore.user.last_name : '',
       email: authStore.user ? authStore.user.email : '',
+    },
+  })
+
+  const {
+    handleSubmit: handleSubmitPassword,
+    formState: { errors: errorsPassword },
+    register: registerPassword,
+    setError: setErrorPassword,
+  } = useForm<UpdatePasswordFields>({
+    defaultValues: {
+      old_password: '',
       password: '',
       confirm_password: '',
     },
@@ -49,13 +60,8 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
   }
 
   const onSubmit = async (data: UpdateUserFields) => {
-    if (data.password != data.confirm_password) {
-      setError('confirm_password', {
-        type: 'custom',
-        message: 'Passwords do not match',
-      })
-      return
-    }
+    console.log(data)
+
     const response = await API.updateUser(data)
 
     if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
@@ -70,6 +76,53 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
       setPasswordOpen(false)
       setAvatarOpen(false)
       setConformOpen(true)
+    }
+  }
+
+  const onSubmitPassword = async (data: UpdatePasswordFields) => {
+    console.log(data)
+
+    if (authStore.user) {
+      if (data.password != data.confirm_password) {
+        setErrorPassword('confirm_password', {
+          type: 'custom',
+          message: 'Passwords do not match',
+        })
+        return
+      }
+
+      const check = await API.login({
+        email: authStore.user.email,
+        password: data.old_password,
+      })
+
+      if (check.data.statusCode === StatusCode.BAD_REQUEST) {
+        setErrorPassword('old_password', {
+          type: 'custom',
+          message: 'Wrong old password',
+        })
+        return
+      }
+
+      const response = await API.updatePassword(data)
+
+      if (response.data?.statusCode === StatusCode.BAD_REQUEST) {
+        setApiError(response.data.message)
+        setShowError(true)
+      } else if (
+        response.data?.statusCode === StatusCode.INTERNAL_SERVER_ERROR
+      ) {
+        setApiError(response.data.message)
+        setShowError(true)
+      } else {
+        console.log('UPDATED')
+
+        authStore.login(response.data)
+        setWindowOpen(false)
+        setPasswordOpen(false)
+        setAvatarOpen(false)
+        setConformOpen(true)
+      }
     }
   }
 
@@ -236,7 +289,10 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
         <div className="overlay" onClick={() => closeAll()}></div>
 
         <div className="settings-box">
-          <form onSubmit={handleSubmit(onSubmit)} className="w-100">
+          <form
+            onSubmit={handleSubmitPassword(onSubmitPassword)}
+            className="w-100"
+          >
             <div className="d-flex flex-column">
               <p className="signup-text-black m-0">
                 Profile <span className="text-orange">settings.</span>{' '}
@@ -257,7 +313,13 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
                 aria-label="Old_password"
                 aria-describedby="old_password"
                 className=" w-100 form-section-orange signup-text-xsmall"
+                {...registerPassword('old_password')}
               />
+              {errorsPassword.old_password && (
+                <p className="text-danger">
+                  {errorsPassword.old_password.message}
+                </p>
+              )}
             </Form.Group>
 
             <Form.Group className="mb-1">
@@ -273,7 +335,7 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
                 aria-label="New_password"
                 aria-describedby="new_password"
                 className=" w-100 form-section-orange signup-text-xsmall"
-                {...register('password', {
+                {...registerPassword('password', {
                   pattern: {
                     value:
                       /^(?=.*\d)[A-Za-z.\s_-]+[\w~@#$%^&*+=`|{}:;!.?"()[\]-]{6,}/,
@@ -283,6 +345,9 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
                   required: true,
                 })}
               />
+              {errorsPassword.password && (
+                <p className="text-danger">{errorsPassword.password.message}</p>
+              )}
             </Form.Group>
 
             <Form.Group className="mb-1">
@@ -298,12 +363,14 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
                 aria-label="Confirm_password"
                 aria-describedby="confirm_password"
                 className=" w-100 form-section-orange signup-text-xsmall"
-                {...register('confirm_password', {
+                {...registerPassword('confirm_password', {
                   required: true,
                 })}
               />
-              {errors.confirm_password && (
-                <p>{errors.confirm_password.message}</p>
+              {errorsPassword.confirm_password && (
+                <p className="text-danger">
+                  {errorsPassword.confirm_password.message}
+                </p>
               )}
             </Form.Group>
 
