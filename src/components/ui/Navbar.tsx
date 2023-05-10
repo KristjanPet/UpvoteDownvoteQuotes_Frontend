@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { routes } from 'constants/routesConstants'
-import Button from 'react-bootstrap/Button'
 import authStore from 'stores/auth.store'
 import { StatusCode } from 'constants/errorConstants'
 import ToastContainer from 'react-bootstrap/esm/ToastContainer'
@@ -11,7 +10,6 @@ import Avatar from 'react-avatar'
 import SettingsForm from 'components/user/SettingsForm'
 import CreateQuoteForm from 'components/quotes/CreateQuoteForm'
 import useMediaQuery from 'hooks/useMediaQuery'
-import { AiOutlineMenu } from 'react-icons/ai'
 import MobileMenuForm from '../user/MobileMenuForm'
 
 const Navbar: FC = () => {

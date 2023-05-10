@@ -1,11 +1,9 @@
 import ShowQuoteComponent from 'components/quotes/ShowQuoteComponent'
-import DashboardLayout from 'components/ui/DashboardLayout'
 import Layout from 'components/ui/Layout'
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import Avatar from 'react-avatar'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
-import authStore from 'stores/auth.store'
 import * as API from 'api/Api'
 import { QuoteNumberType, UserType } from 'models/auth'
 

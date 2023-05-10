@@ -7,10 +7,8 @@ import * as API from 'api/Api'
 import ShowQuoteComponent from 'components/quotes/ShowQuoteComponent'
 import { useQuery } from 'react-query'
 import authStore from 'stores/auth.store'
-import useMediaQuery from 'hooks/useMediaQuery'
 
 const Home: FC = () => {
-  const { isMobile } = useMediaQuery(769)
   const [randomQuote, setRandomQuote] = useState<QuoteNumberType>()
   const [pageNumberLikedQuotes, setPageNumberLikedQuotes] = useState(1)
   const [pageNumberRecentQuotes, setPageNumberRecentQuotes] = useState(1)

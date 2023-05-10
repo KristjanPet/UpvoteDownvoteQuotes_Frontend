@@ -1,29 +1,19 @@
 import { StatusCode } from 'constants/errorConstants'
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
-import { Form, FormLabel } from 'react-bootstrap'
+import { FC, useState } from 'react'
+import { Form } from 'react-bootstrap'
 import ToastContainer from 'react-bootstrap/ToastContainer'
 import Toast from 'react-bootstrap/Toast'
-import Button from 'react-bootstrap/Button'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 import Popup from 'reactjs-popup'
 import * as API from 'api/Api'
-import authStore from 'stores/auth.store'
-import { observer } from 'mobx-react'
 import { createQuoteField } from 'models/quote'
-import Avatar from 'react-avatar'
-import { AiOutlineSetting } from 'react-icons/ai'
 
 type props = {
   opacity: string
 }
 
 const CreateQuoteForm: FC<props> = ({ opacity }) => {
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-  } = useForm<createQuoteField>({
+  const { handleSubmit, register } = useForm<createQuoteField>({
     defaultValues: {
       text: '',
     },

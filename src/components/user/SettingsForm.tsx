@@ -1,5 +1,5 @@
 import { StatusCode } from 'constants/errorConstants'
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { Form, FormLabel } from 'react-bootstrap'
 import ToastContainer from 'react-bootstrap/ToastContainer'
 import Toast from 'react-bootstrap/Toast'
@@ -8,7 +8,7 @@ import Popup from 'reactjs-popup'
 import * as API from 'api/Api'
 import authStore from 'stores/auth.store'
 import { observer } from 'mobx-react'
-import { UpdatePasswordFields, UpdateUserFields, UserType } from 'models/auth'
+import { UpdatePasswordFields, UpdateUserFields } from 'models/auth'
 import Avatar from 'react-avatar'
 
 type props = {
@@ -16,12 +16,7 @@ type props = {
 }
 
 const SettingsForm: FC<props> = ({ navbarClass }) => {
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-    setError,
-  } = useForm<UpdateUserFields>({
+  const { handleSubmit, register } = useForm<UpdateUserFields>({
     defaultValues: {
       first_name: authStore.user ? authStore.user.first_name : '',
       last_name: authStore.user ? authStore.user.last_name : '',
@@ -83,7 +78,7 @@ const SettingsForm: FC<props> = ({ navbarClass }) => {
     console.log(data)
 
     if (authStore.user) {
-      if (data.password != data.confirm_password) {
+      if (data.password !== data.confirm_password) {
         setErrorPassword('confirm_password', {
           type: 'custom',
           message: 'Passwords do not match',
