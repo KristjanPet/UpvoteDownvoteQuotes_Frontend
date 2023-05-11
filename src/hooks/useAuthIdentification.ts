@@ -39,5 +39,6 @@ export const useAuthIdentification = () => {
 
   useEffect(() => {
     if (location.pathname) checkLogin()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname])
 }

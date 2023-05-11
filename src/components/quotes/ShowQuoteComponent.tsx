@@ -45,13 +45,14 @@ const ShowQuoteComponent: FC<Props> = ({ quote }) => {
 
   const handleVote = async (vote: boolean) => {
     if (isAuthor) return
-    const api_request =
-      vote === true
-        ? API.postUpVote(quote.quote.id)
-        : API.postDownVote(quote.quote.id)
+
+    if (vote) {
+      await API.postUpVote(quote.quote.id)
+    } else {
+      await API.postDownVote(quote.quote.id)
+    }
 
     try {
-      const res = (await api_request).data
       if (voteType === 'upvote' && vote === true) {
         setQuoteVotes(quoteVotes - 1)
         setVoteType(null)
