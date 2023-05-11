@@ -1,2 +1,2 @@
 /*
-Access-Control-Allow-Origin: https://quote-tastick.onrender.com
+  Access-Control-Allow-Origin: *
