@@ -23,7 +23,7 @@ const ShowQuoteComponent: FC<Props> = ({ quote }) => {
 
   useEffect(() => {
     const checkVote = async () => {
-      if (!quote.quote.id) return
+      if (!quote.quote.id || !authStore.user) return
       try {
         const { didVote, upDown, isAuthor } = (
           await API.checkVote(quote.quote.id)
