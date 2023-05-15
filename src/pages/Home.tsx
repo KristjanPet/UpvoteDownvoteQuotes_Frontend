@@ -150,7 +150,7 @@ const Home: FC = () => {
         ) : (
           <div className="home-page-container d-flex flex-column">
             <div className="row justify-content-around mb-5">
-              <div className="col-md-auto mb-5">
+              <div className="col-auto mb-5">
                 <h1 className="font-size-98 line-space-0">
                   Welcome <br /> to{' '}
                   <span className="text-orange">Quotastic</span>{' '}
@@ -166,7 +166,7 @@ const Home: FC = () => {
                   <button className="signup-button-litlle">Sign up</button>
                 </NavLink>
               </div>
-              <div className="col-md-auto">
+              <div className="col-auto">
                 <img
                   src="/images/homePageQuote.svg"
                   // className='bg-light'
@@ -180,7 +180,7 @@ const Home: FC = () => {
                 <span className="text-orange">fantastic quotes</span>{' '}
               </p>
             </div>
-            <div className="d-flex justify-content-center align-items-center mb-3 mg-top-150 pl-40">
+            <div className="d-flex justify-content-center align-items-center mb-3 mg-top-150">
               <div className="d-flex flex-column w-50">
                 <p className="font-size-35 text-center line-space-0 text-orange">
                   Most upvoted quotes
